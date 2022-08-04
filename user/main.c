@@ -122,14 +122,14 @@ int main(void)
 //	  printf("a");
 	  delay_ms(100);
 	  while(usart_flag_get(PRINT_UART, USART_TDBE_FLAG) == RESET);
-	    usart_data_transmit(PRINT_UART, 'a');
+	  usart_data_transmit(PRINT_UART, 'a');
 
-//    at32_led_toggle(LED2);
-//    delay_ms(g_speed * DELAY);
-//    at32_led_toggle(LED3);
-//    delay_ms(g_speed * DELAY);
-//    at32_led_toggle(LED4);
-//    delay_ms(g_speed * DELAY);
+    at32_led_toggle(LED2);
+    delay_ms(g_speed * DELAY);
+    at32_led_toggle(LED3);
+    delay_ms(g_speed * DELAY);
+    at32_led_toggle(LED4);
+    delay_ms(g_speed * DELAY);
   }
 }
 

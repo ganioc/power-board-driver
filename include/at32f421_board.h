@@ -69,14 +69,14 @@ typedef enum
 
 #if defined (AT_START_F421_V1)
 #define LED2_PIN                         GPIO_PINS_6
-#define LED2_GPIO                        GPIOF
-#define LED2_GPIO_CRM_CLK                CRM_GPIOF_PERIPH_CLOCK
+#define LED2_GPIO                        GPIOB
+#define LED2_GPIO_CRM_CLK                CRM_GPIOB_PERIPH_CLOCK
 
 #define LED3_PIN                         GPIO_PINS_7
-#define LED3_GPIO                        GPIOF
-#define LED3_GPIO_CRM_CLK                CRM_GPIOF_PERIPH_CLOCK
+#define LED3_GPIO                        GPIOB
+#define LED3_GPIO_CRM_CLK                CRM_GPIOB_PERIPH_CLOCK
 
-#define LED4_PIN                         GPIO_PINS_11
+#define LED4_PIN                         GPIO_PINS_8
 #define LED4_GPIO                        GPIOB
 #define LED4_GPIO_CRM_CLK                CRM_GPIOB_PERIPH_CLOCK
 #endif
