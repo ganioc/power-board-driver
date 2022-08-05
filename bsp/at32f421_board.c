@@ -47,7 +47,8 @@ crm_periph_clock_type led_gpio_crm_clk[LED_NUM] = {LED2_GPIO_CRM_CLK, LED3_GPIO_
 /* usart1 rx buffer */
 uint8_t usart1_rx_buffer[USART1_RX_BUFFER_SIZE];
 uint16_t usart1_rx_counter = 0;
-uint8_t version_buffer[]={'1','.','0',0};
+uint16_t usart1_rx_ptr = 0;
+uint8_t version_buffer[]={'1','.','0', 0};
 
 /* delay variable */
 static __IO uint32_t fac_us;

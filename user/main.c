@@ -28,6 +28,7 @@
 
 #include "at32f421_board.h"
 #include "at32f421_clock.h"
+#include "parser.h"
 
 /** @addtogroup AT32F421_periph_template
   * @{
@@ -43,6 +44,7 @@
 
 extern uint8_t usart1_rx_buffer[];
 extern uint16_t usart1_rx_counter;
+extern uint16_t usart1_rx_ptr;
 extern uint8_t version_buffer[];
 
 uint8_t g_speed = FAST;
@@ -130,8 +132,8 @@ int main(void)
 
   while(1)
   {
-	  printf("90\r\n");
-	  delay_ms(500);
+//	  printf("90\r\n");
+//	  delay_ms(500);
 //	  while(usart_flag_get(PRINT_UART, USART_TDBE_FLAG) == RESET);
 //	  usart_data_transmit(PRINT_UART, 'a');
 
@@ -145,6 +147,17 @@ int main(void)
 //    	  usart1_rx_buffer[0] = usart_data_receive(USART1);
 //    	  at32_led_toggle(LED4);
 //      }
+	  /* Only the rx buffer is never overflow */
+	  if(usart1_rx_ptr != usart1_rx_counter){
+		  printf("%c\r\n",usart1_rx_buffer[usart1_rx_ptr]);
+		  parse(usart1_rx_buffer[usart1_rx_ptr]);
+
+		  usart1_rx_ptr++;
+
+		  if(usart1_rx_ptr >= USART1_RX_BUFFER_SIZE){
+			  usart1_rx_ptr = 0;
+		  }
+	  }
   }
 }
 
