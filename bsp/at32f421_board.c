@@ -44,6 +44,11 @@ gpio_type *led_gpio_port[LED_NUM]        = {LED2_GPIO, LED3_GPIO, LED4_GPIO};
 uint16_t led_gpio_pin[LED_NUM]           = {LED2_PIN, LED3_PIN, LED4_PIN};
 crm_periph_clock_type led_gpio_crm_clk[LED_NUM] = {LED2_GPIO_CRM_CLK, LED3_GPIO_CRM_CLK, LED4_GPIO_CRM_CLK};
 
+/* usart1 rx buffer */
+uint8_t usart1_rx_buffer[USART1_RX_BUFFER_SIZE];
+uint16_t usart1_rx_counter = 0;
+
+
 /* delay variable */
 static __IO uint32_t fac_us;
 static __IO uint32_t fac_ms;
@@ -100,17 +105,17 @@ PUTCHAR_PROTOTYPE
   return ch;
 }
 /* For GCC compiler revise _write() function for printf functionality */
-int _write(int file, char *ptr, int len)
-{
-    int i;
-//    file = file;
-    for (i = 0; i < len; i++)
-    {
-    	while(usart_flag_get(PRINT_UART, USART_TDBE_FLAG) == RESET);
-    	usart_data_transmit(PRINT_UART,ptr[i]);
-    }
-    return len;
-}
+//int _write(int file, char *ptr, int len)
+//{
+//    int i;
+////    file = file;
+//    for (i = 0; i < len; i++)
+//    {
+//    	while(usart_flag_get(PRINT_UART, USART_TDBE_FLAG) == RESET);
+//    	usart_data_transmit(PRINT_UART,ptr[i]);
+//    }
+//    return len;
+//}
 /**
   * @brief  initialize uart
   * @param  baudrate: uart baudrate
@@ -126,20 +131,34 @@ void uart_print_init(uint32_t baudrate)
 
   gpio_default_para_init(&gpio_init_struct);
 
-  /* configure the uart tx pin */
+  /* configure the uart tx pin, and rx pin */
   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_STRONGER;
   gpio_init_struct.gpio_out_type  = GPIO_OUTPUT_PUSH_PULL;
   gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
-  gpio_init_struct.gpio_pins = PRINT_UART_TX_PIN;
+  gpio_init_struct.gpio_pins = PRINT_UART_TX_PIN | PRINT_UART_RX_PIN;
   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
   gpio_init(PRINT_UART_TX_GPIO, &gpio_init_struct);
 
+  /* configure uart1 io mux */
   gpio_pin_mux_config(PRINT_UART_TX_GPIO, PRINT_UART_TX_PIN_SOURCE, PRINT_UART_TX_PIN_MUX_NUM);
+  gpio_pin_mux_config(PRINT_UART_RX_GPIO, PRINT_UART_RX_PIN_SOURCE, PRINT_UART_RX_PIN_MUX_NUM);
+
+
 
   /* configure uart param */
   usart_init(PRINT_UART, baudrate, USART_DATA_8BITS, USART_STOP_1_BIT);
+  usart_parity_selection_config(PRINT_UART, USART_PARITY_NONE);
+
   usart_transmitter_enable(PRINT_UART, TRUE);
+  usart_receiver_enable(PRINT_UART, TRUE);
+
+  usart_interrupt_enable(PRINT_UART, USART_RDBF_INT, TRUE);
+
+
   usart_enable(PRINT_UART, TRUE);
+
+  /* config  usart1 nvic interrupt */
+  nvic_irq_enable(USART1_IRQn, 0, 0);
 }
 
 /**
@@ -260,7 +279,7 @@ void at32_led_on(led_type led)
   if(led > (LED_NUM - 1))
     return;
   if(led_gpio_pin[led])
-    led_gpio_port[led]->clr = led_gpio_pin[led];
+    led_gpio_port[led]->scr = led_gpio_pin[led];
 }
 
 /**
@@ -277,7 +296,7 @@ void at32_led_off(led_type led)
   if(led > (LED_NUM - 1))
     return;
   if(led_gpio_pin[led])
-    led_gpio_port[led]->scr = led_gpio_pin[led];
+    led_gpio_port[led]->clr = led_gpio_pin[led];
 }
 
 /**

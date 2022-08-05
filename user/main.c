@@ -41,10 +41,13 @@
 #define FAST                             1
 #define SLOW                             4
 
+extern uint8_t usart1_rx_buffer[];
+extern uint16_t usart1_rx_counter;
+
 uint8_t g_speed = FAST;
 
-void button_exint_init(void);
-void button_isr(void);
+//void button_exint_init(void);
+//void button_isr(void);
 
 /**
   * @brief  configure button exint
@@ -112,26 +115,31 @@ void EXINT1_0_IRQHandler(void)
 int main(void)
 {
   system_clock_config();
+  nvic_priority_group_config(NVIC_PRIORITY_GROUP_4);
 
   uart_print_init(115200);
 
   at32_board_init();
 
-  button_exint_init();
+//  button_exint_init();
 
   while(1)
   {
-	  printf("a");
-	  delay_ms(100);
+	  printf("9");
+	  delay_ms(500);
 //	  while(usart_flag_get(PRINT_UART, USART_TDBE_FLAG) == RESET);
 //	  usart_data_transmit(PRINT_UART, 'a');
 
-    at32_led_toggle(LED2);
-    delay_ms(g_speed * DELAY);
-    at32_led_toggle(LED3);
-    delay_ms(g_speed * DELAY);
-    at32_led_toggle(LED4);
-    delay_ms(g_speed * DELAY);
+//    at32_led_toggle(LED2);
+//    delay_ms(g_speed * DELAY);
+      at32_led_toggle(LED3);
+//    delay_ms(g_speed * DELAY);
+//    at32_led_toggle(LED4);
+//    delay_ms(g_speed * DELAY);
+//      if(usart_flag_get(USART1, USART_RDBF_FLAG) != RESET){
+//    	  usart1_rx_buffer[0] = usart_data_receive(USART1);
+//    	  at32_led_toggle(LED4);
+//      }
   }
 }
 
