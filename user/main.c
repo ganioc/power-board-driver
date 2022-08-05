@@ -43,6 +43,7 @@
 
 extern uint8_t usart1_rx_buffer[];
 extern uint16_t usart1_rx_counter;
+extern uint8_t version_buffer[];
 
 uint8_t g_speed = FAST;
 
@@ -123,16 +124,20 @@ int main(void)
 
 //  button_exint_init();
 
+  printf("\r\nPower Board Controller\r\n");
+
+  printf("version:%s\r\n",version_buffer);
+
   while(1)
   {
-	  printf("9");
+	  printf("90\r\n");
 	  delay_ms(500);
 //	  while(usart_flag_get(PRINT_UART, USART_TDBE_FLAG) == RESET);
 //	  usart_data_transmit(PRINT_UART, 'a');
 
 //    at32_led_toggle(LED2);
 //    delay_ms(g_speed * DELAY);
-      at32_led_toggle(LED3);
+//      at32_led_toggle(LED3);
 //    delay_ms(g_speed * DELAY);
 //    at32_led_toggle(LED4);
 //    delay_ms(g_speed * DELAY);

@@ -47,7 +47,7 @@ crm_periph_clock_type led_gpio_crm_clk[LED_NUM] = {LED2_GPIO_CRM_CLK, LED3_GPIO_
 /* usart1 rx buffer */
 uint8_t usart1_rx_buffer[USART1_RX_BUFFER_SIZE];
 uint16_t usart1_rx_counter = 0;
-
+uint8_t version_buffer[]={'1','.','0',0};
 
 /* delay variable */
 static __IO uint32_t fac_us;
@@ -105,17 +105,17 @@ PUTCHAR_PROTOTYPE
   return ch;
 }
 /* For GCC compiler revise _write() function for printf functionality */
-//int _write(int file, char *ptr, int len)
-//{
-//    int i;
-////    file = file;
-//    for (i = 0; i < len; i++)
-//    {
-//    	while(usart_flag_get(PRINT_UART, USART_TDBE_FLAG) == RESET);
-//    	usart_data_transmit(PRINT_UART,ptr[i]);
-//    }
-//    return len;
-//}
+int _write(int file, char *ptr, int len)
+{
+    int i;
+//    file = file;
+    for (i = 0; i < len; i++)
+    {
+    	while(usart_flag_get(PRINT_UART, USART_TDBE_FLAG) == RESET);
+    	usart_data_transmit(PRINT_UART,ptr[i]);
+    }
+    return len;
+}
 /**
   * @brief  initialize uart
   * @param  baudrate: uart baudrate
@@ -143,8 +143,6 @@ void uart_print_init(uint32_t baudrate)
   gpio_pin_mux_config(PRINT_UART_TX_GPIO, PRINT_UART_TX_PIN_SOURCE, PRINT_UART_TX_PIN_MUX_NUM);
   gpio_pin_mux_config(PRINT_UART_RX_GPIO, PRINT_UART_RX_PIN_SOURCE, PRINT_UART_RX_PIN_MUX_NUM);
 
-
-
   /* configure uart param */
   usart_init(PRINT_UART, baudrate, USART_DATA_8BITS, USART_STOP_1_BIT);
   usart_parity_selection_config(PRINT_UART, USART_PARITY_NONE);
@@ -153,7 +151,6 @@ void uart_print_init(uint32_t baudrate)
   usart_receiver_enable(PRINT_UART, TRUE);
 
   usart_interrupt_enable(PRINT_UART, USART_RDBF_INT, TRUE);
-
 
   usart_enable(PRINT_UART, TRUE);
 

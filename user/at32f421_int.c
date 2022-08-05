@@ -161,7 +161,6 @@ void USART1_IRQHandler(void)
       // usart_interrupt_enable(USART1, USART_RDBF_INT, FALSE);
     	usart1_rx_counter=0;
     }
-
     at32_led_toggle(LED2);
 
   }
