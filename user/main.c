@@ -24,6 +24,8 @@
   **************************************************************************
   */
 
+#include <stdio.h>
+
 #include "at32f421_board.h"
 #include "at32f421_clock.h"
 
@@ -119,10 +121,10 @@ int main(void)
 
   while(1)
   {
-//	  printf("a");
+	  printf("a");
 	  delay_ms(100);
-	  while(usart_flag_get(PRINT_UART, USART_TDBE_FLAG) == RESET);
-	  usart_data_transmit(PRINT_UART, 'a');
+//	  while(usart_flag_get(PRINT_UART, USART_TDBE_FLAG) == RESET);
+//	  usart_data_transmit(PRINT_UART, 'a');
 
     at32_led_toggle(LED2);
     delay_ms(g_speed * DELAY);

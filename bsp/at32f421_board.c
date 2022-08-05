@@ -82,7 +82,8 @@ static __IO uint32_t fac_ms;
 #endif
 
 #if defined (__GNUC__) && !defined (__clang__)
-  #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+  // #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+  #define PUTCHAR_PROTOTYPE int putchar(int ch)
 #else
   #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
 #endif
@@ -98,7 +99,18 @@ PUTCHAR_PROTOTYPE
   usart_data_transmit(PRINT_UART, ch);
   return ch;
 }
-
+/* For GCC compiler revise _write() function for printf functionality */
+int _write(int file, char *ptr, int len)
+{
+    int i;
+//    file = file;
+    for (i = 0; i < len; i++)
+    {
+    	while(usart_flag_get(PRINT_UART, USART_TDBE_FLAG) == RESET);
+    	usart_data_transmit(PRINT_UART,ptr[i]);
+    }
+    return len;
+}
 /**
   * @brief  initialize uart
   * @param  baudrate: uart baudrate
