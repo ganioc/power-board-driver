@@ -111,6 +111,11 @@ typedef enum
 #define USART1_RX_BUFFER_SIZE            256
 
 
+/* About ADC pins */
+#define ADC_CHANNEL_NUM                  10
+#define ADC_REPEAT_TIMES                 3
+
+
 /**
   * @}
   */

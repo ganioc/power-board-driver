@@ -38,7 +38,7 @@
 
 extern uint8_t usart1_rx_buffer[];
 extern uint16_t usart1_rx_counter;
-
+extern uint16_t dma_trans_complete_flag;
 
 
 /**
@@ -176,6 +176,21 @@ void USART1_IRQHandler(void)
 //      usart_interrupt_enable(USART1, USART_TDBE_INT, FALSE);
 //    }
 //  }
+}
+
+/**
+  * @brief  this function handles dma1_channel1 handler.
+  * @param  none
+  * @retval none
+  */
+void DMA1_Channel1_IRQHandler(void)
+{
+	at32_led_toggle(LED2);
+  if(dma_flag_get(DMA1_FDT1_FLAG) != RESET)
+  {
+    dma_flag_clear(DMA1_FDT1_FLAG);
+    dma_trans_complete_flag = 1;
+  }
 }
 /**
   * @}

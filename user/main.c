@@ -46,6 +46,8 @@ extern uint8_t usart1_rx_buffer[];
 extern uint16_t usart1_rx_counter;
 extern uint16_t usart1_rx_ptr;
 extern uint8_t version_buffer[];
+extern uint16_t adc1_ordinary_valuetab[ADC_REPEAT_TIMES][ADC_CHANNEL_NUM];
+extern uint16_t dma_trans_complete_flag;
 
 uint8_t g_speed = FAST;
 
@@ -125,10 +127,15 @@ int main(void)
   at32_board_init();
 
 //  button_exint_init();
-
-  printf("\r\nPower Board Controller\r\n");
+  printf("\r\n================================\r\n");
+  printf("Power Board Controller\r\n");
 
   printf("version:%s\r\n",version_buffer);
+  printf("================================\r\n");
+
+//  delay_ms(2000);
+
+  adc_ordinary_software_trigger_enable(ADC1, TRUE);
 
   while(1)
   {
@@ -139,7 +146,7 @@ int main(void)
 
 //    at32_led_toggle(LED2);
 //    delay_ms(g_speed * DELAY);
-//      at32_led_toggle(LED3);
+      at32_led_toggle(LED3);
 //    delay_ms(g_speed * DELAY);
 //    at32_led_toggle(LED4);
 //    delay_ms(g_speed * DELAY);
@@ -157,6 +164,16 @@ int main(void)
 		  if(usart1_rx_ptr >= USART1_RX_BUFFER_SIZE){
 			  usart1_rx_ptr = 0;
 		  }
+	  }
+
+	  if(dma_trans_complete_flag == 1){
+		  // print out the adc result
+		  for(int i=0; i< ADC_REPEAT_TIMES; i++){
+			  for(int j=0; j< ADC_CHANNEL_NUM; j++){
+				  printf("adc1-%d-%d\r\n",i, adc1_ordinary_valuetab[i][j]);
+			  }
+		  }
+		  dma_trans_complete_flag = 0;
 	  }
   }
 }
