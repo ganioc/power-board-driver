@@ -48,6 +48,7 @@ extern uint16_t usart1_rx_ptr;
 extern uint8_t version_buffer[];
 extern uint16_t adc1_ordinary_valuetab[ADC_REPEAT_TIMES][ADC_CHANNEL_NUM];
 extern uint16_t dma_trans_complete_flag;
+extern uint16_t dma_in_working;
 
 uint8_t g_speed = FAST;
 
@@ -126,6 +127,12 @@ int main(void)
 
   at32_board_init();
 
+   adc_gpio_config();
+   adc_dma_config();
+   adc_config();
+
+
+
 //  button_exint_init();
   printf("\r\n================================\r\n");
   printf("Power Board Controller\r\n");
@@ -133,7 +140,7 @@ int main(void)
   printf("version:%s\r\n",version_buffer);
   printf("================================\r\n");
 
-  delay_ms(1000);
+//  delay_ms(1000);
 
   adc_ordinary_software_trigger_enable(ADC1, TRUE);
 
@@ -174,8 +181,58 @@ int main(void)
 			  }
 		  }
 		  dma_trans_complete_flag = 0;
+//		  dma_in_working = 0;
+//		  adc_dma_config();
+//		  adc_config();
+//		  adc_ordinary_software_trigger_enable(ADC1, TRUE);
+		  break;
 	  }
   }
+  adc_ordinary_software_trigger_enable(ADC1, TRUE);
+  while(1)
+    {
+  //	  printf("90\r\n");
+  //	  delay_ms(500);
+  //	  while(usart_flag_get(PRINT_UART, USART_TDBE_FLAG) == RESET);
+  //	  usart_data_transmit(PRINT_UART, 'a');
+
+  //    at32_led_toggle(LED2);
+  //    delay_ms(g_speed * DELAY);
+  //      at32_led_toggle(LED3);
+  //    delay_ms(g_speed * DELAY);
+  //    at32_led_toggle(LED4);
+  //    delay_ms(g_speed * DELAY);
+  //      if(usart_flag_get(USART1, USART_RDBF_FLAG) != RESET){
+  //    	  usart1_rx_buffer[0] = usart_data_receive(USART1);
+  //    	  at32_led_toggle(LED4);
+  //      }
+  	  /* Only the rx buffer is never overflow */
+  	  if(usart1_rx_ptr != usart1_rx_counter){
+  		  printf("%c\r\n",usart1_rx_buffer[usart1_rx_ptr]);
+  		  parse(usart1_rx_buffer[usart1_rx_ptr]);
+
+  		  usart1_rx_ptr++;
+
+  		  if(usart1_rx_ptr >= USART1_RX_BUFFER_SIZE){
+  			  usart1_rx_ptr = 0;
+  		  }
+  	  }
+
+  	  if(dma_trans_complete_flag == 1){
+  		  // print out the adc result
+  		  for(int i=0; i< ADC_REPEAT_TIMES; i++){
+  			  for(int j=0; j< ADC_CHANNEL_NUM; j++){
+  				  printf("adc1-%d-%d\r\n",i, adc1_ordinary_valuetab[i][j]);
+  			  }
+  		  }
+  		  dma_trans_complete_flag = 0;
+  //		  dma_in_working = 0;
+  //		  adc_dma_config();
+  //		  adc_config();
+  //		  adc_ordinary_software_trigger_enable(ADC1, TRUE);
+  		  break;
+  	  }
+    }
 }
 
 /**

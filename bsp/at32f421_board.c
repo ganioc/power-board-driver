@@ -53,6 +53,10 @@ uint8_t version_buffer[]={'1','.','0', 0};
 /* adc1 buffer */
 __IO uint16_t adc1_ordinary_valuetab[ADC_REPEAT_TIMES][ADC_CHANNEL_NUM] = {0};
 __IO uint16_t dma_trans_complete_flag = 0;
+ uint16_t dma_in_working=0;
+
+/* timer1 */
+crm_clocks_freq_type crm_clocks_freq_struct = {0};
 
 /* delay variable */
 static __IO uint32_t fac_us;
@@ -240,6 +244,27 @@ void adc_config(void)
   adc_calibration_start(ADC1);
   while(adc_calibration_status_get(ADC1));
 }
+void timer1_config(void) {
+	/* get system clock */
+	crm_clocks_freq_get(&crm_clocks_freq_struct);
+	/* enable tmr1 clock */
+	crm_periph_clock_enable(CRM_TMR1_PERIPH_CLOCK, TRUE);
+
+	/* tmr1 configuration */
+	/* time base configuration */
+	/* systemclock/12000/10000 = 1hz */
+	tmr_base_init(TMR1, TIMER1_COUNT_VAL, (crm_clocks_freq_struct.ahb_freq / 10000) - 1);
+	tmr_cnt_dir_set(TMR1, TMR_COUNT_UP);
+
+	/* overflow interrupt enable */
+	tmr_interrupt_enable(TMR1, TMR_OVF_INT, TRUE);
+	/* tmr1 overflow interrupt nvic init */
+	nvic_priority_group_config(NVIC_PRIORITY_GROUP_4);
+	nvic_irq_enable(TMR1_BRK_OVF_TRG_HALL_IRQn, 0, 0);
+	/* enable tmr1 */
+//	tmr_counter_enable(TMR1, TRUE);
+
+}
 /**
   * @brief  board initialize interface init led and button
   * @param  none
@@ -261,9 +286,9 @@ void at32_board_init()
   /* configure button in at_start board */
 //  at32_button_init();
 
-  adc_gpio_config();
-  adc_dma_config();
-  adc_config();
+
+
+//  timer1_config();
 
 }
 

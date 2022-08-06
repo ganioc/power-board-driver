@@ -115,6 +115,8 @@ typedef enum
 #define ADC_CHANNEL_NUM                  12
 #define ADC_REPEAT_TIMES                 10
 
+/* Timer1, 1s=9999 */
+#define TIMER1_COUNT_VAL                 9999
 
 /**
   * @}
@@ -146,6 +148,12 @@ void delay_sec(uint16_t sec);
 
 /* printf uart init function */
 void uart_print_init(uint32_t baudrate);
+
+void adc_gpio_config();
+void adc_dma_config();
+void adc_config();
+
+
 
 /**
   * @}

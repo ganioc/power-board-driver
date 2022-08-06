@@ -39,7 +39,7 @@
 extern uint8_t usart1_rx_buffer[];
 extern uint16_t usart1_rx_counter;
 extern uint16_t dma_trans_complete_flag;
-
+extern uint16_t dma_in_working;
 
 /**
   * @brief  this function handles nmi exception.
@@ -136,6 +136,7 @@ void PendSV_Handler(void)
   */
 void SysTick_Handler(void)
 {
+
 }
 
 /**
@@ -190,6 +191,25 @@ void DMA1_Channel1_IRQHandler(void)
   {
     dma_flag_clear(DMA1_FDT1_FLAG);
     dma_trans_complete_flag = 1;
+  }
+}
+
+void TMR1_BRK_OVF_TRG_HALL_IRQHandler(void)
+{
+  if(tmr_flag_get(TMR1, TMR_OVF_FLAG) != RESET)
+  {
+    /* add user code... */
+    at32_led_toggle(LED3);
+    tmr_flag_clear(TMR1, TMR_OVF_FLAG);
+
+    if(dma_in_working == 0){
+    	dma_in_working = 1;
+    	// start DMA
+    	// adc_ordinary_software_trigger_enable(ADC1, TRUE);
+    	printf("A\r\n");
+    }else{
+    	printf("B\r\n");
+    }
   }
 }
 /**
