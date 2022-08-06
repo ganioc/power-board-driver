@@ -227,6 +227,8 @@ void adc_config(void)
   adc_ordinary_channel_set(ADC1, ADC_CHANNEL_7, 8, ADC_SAMPLETIME_239_5);
   adc_ordinary_channel_set(ADC1, ADC_CHANNEL_8, 9, ADC_SAMPLETIME_239_5);
   adc_ordinary_channel_set(ADC1, ADC_CHANNEL_9, 10, ADC_SAMPLETIME_239_5);
+  adc_ordinary_channel_set(ADC1, ADC_CHANNEL_16, 11, ADC_SAMPLETIME_239_5);
+  adc_ordinary_channel_set(ADC1, ADC_CHANNEL_17, 12, ADC_SAMPLETIME_239_5);
 
   adc_ordinary_conversion_trigger_set(ADC1, ADC12_ORDINARY_TRIG_SOFTWARE, TRUE);
   // dma mode!

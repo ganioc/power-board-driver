@@ -133,7 +133,7 @@ int main(void)
   printf("version:%s\r\n",version_buffer);
   printf("================================\r\n");
 
-//  delay_ms(2000);
+  delay_ms(1000);
 
   adc_ordinary_software_trigger_enable(ADC1, TRUE);
 
@@ -146,7 +146,7 @@ int main(void)
 
 //    at32_led_toggle(LED2);
 //    delay_ms(g_speed * DELAY);
-      at32_led_toggle(LED3);
+//      at32_led_toggle(LED3);
 //    delay_ms(g_speed * DELAY);
 //    at32_led_toggle(LED4);
 //    delay_ms(g_speed * DELAY);

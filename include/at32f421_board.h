@@ -112,8 +112,8 @@ typedef enum
 
 
 /* About ADC pins */
-#define ADC_CHANNEL_NUM                  10
-#define ADC_REPEAT_TIMES                 3
+#define ADC_CHANNEL_NUM                  12
+#define ADC_REPEAT_TIMES                 10
 
 
 /**

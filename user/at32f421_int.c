@@ -185,7 +185,7 @@ void USART1_IRQHandler(void)
   */
 void DMA1_Channel1_IRQHandler(void)
 {
-	at32_led_toggle(LED2);
+//	at32_led_toggle(LED2);
   if(dma_flag_get(DMA1_FDT1_FLAG) != RESET)
   {
     dma_flag_clear(DMA1_FDT1_FLAG);
