@@ -29,6 +29,7 @@
 #include "at32f421_board.h"
 #include "at32f421_clock.h"
 #include "parser.h"
+#include "adc.h"
 
 /** @addtogroup AT32F421_periph_template
  * @{
@@ -119,7 +120,7 @@ int main(void) {
 	system_clock_config();
 	nvic_priority_group_config(NVIC_PRIORITY_GROUP_4);
 
-	uart_print_init(115200);
+	uart_print_init(UART1_BAUDRATE);
 
 	at32_board_init();
 
@@ -170,31 +171,35 @@ int main(void) {
 			}
 		}
 
-		if (dma_trans_complete_flag == 1) {
-			// print out the adc result
-			for (int i = 0; i < ADC_REPEAT_TIMES; i++) {
-				for (int j = 0; j < ADC_CHANNEL_NUM; j++) {
-					printf("adc1-%d-%d\r\n", i, adc1_ordinary_valuetab[i][j]);
-				}
-			}
-			dma_trans_complete_flag = 0;
+//		if (dma_trans_complete_flag == 1) {
+//			// print out the adc result
+//			for (int i = 0; i < ADC_REPEAT_TIMES; i++) {
+//				for (int j = 0; j < ADC_CHANNEL_NUM; j++) {
+//					printf("adc1-%d-%d\r\n", i, adc1_ordinary_valuetab[i][j]);
+//				}
+//			}
+//			dma_trans_complete_flag = 0;
 //		  dma_in_working = 0;
 //		  adc_dma_config();
 //		  adc_config();
 //		  adc_ordinary_software_trigger_enable(ADC1, TRUE);
 //			break;
-		}
+//		}
 		if(dma_flag_get(DMA1_FDT1_FLAG) != RESET){
 			dma_flag_clear(DMA1_FDT1_FLAG);
 			// printf("internal_temperature = %f deg C\r\n",
 			//(ADC_TEMP_BASE - (double)adc1_ordinary_value * ADC_VREF / 4096) / ADC_TEMP_SLOPE + 25);
 			// printf("ADC temp %d\r\n", adc1_ordinary_valuetab);
 			// adc_ordinary_conversion_trigger_set(ADC1, ADC12_ORDINARY_TRIG_SOFTWARE, FALSE);
-			for (int i = 0; i < ADC_REPEAT_TIMES; i++) {
-				for (int j = 0; j < ADC_CHANNEL_NUM; j++) {
-					printf("adc1-%d-%d\r\n", i, adc1_ordinary_valuetab[i][j]);
-				}
-			}
+//			for (int j = 0; j < ADC_CHANNEL_NUM; j++) {
+//				uint16_t temp = 0;
+//				for (int i = 0; i < ADC_REPEAT_TIMES; i++) {
+//					printf("adc1-%d-%d\r\n", i, adc1_ordinary_valuetab[i][j]);
+//					temp += adc1_ordinary_valuetab[i][j];
+//				}
+//
+//			}
+			handle_adc_value(ADC_CHANNEL_NUM, ADC_REPEAT_TIMES, adc1_ordinary_valuetab);
 		}
 	}
 }

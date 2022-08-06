@@ -13,6 +13,9 @@
 struct SYSTEM_STATE{
 	uint8_t vout;
 	uint8_t echo_en;
+
+	uint16_t adc_val[ADC_CHANNEL_NUM];
+
 };
 
 void handle_command(uint8_t type,

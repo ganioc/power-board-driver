@@ -11,7 +11,11 @@
 #include "command.h"
 #include "parser.h"
 
-struct SYSTEM_STATE sys_state = { vout: 0, echo_en: 0 };
+struct SYSTEM_STATE sys_state = {
+		vout: 0,
+		echo_en: 0,
+		adc_val: {0},
+};
 
 void handle_read_command(uint8_t *tag_buffer, uint8_t tag_index) {
 	if (tag_index == 0) {
