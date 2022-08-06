@@ -155,8 +155,8 @@ void adc_config();
 
 void timer1_config(void);
 
-
-
+void dma_config1();
+void adc_config1(void);
 /**
   * @}
   */

@@ -49,6 +49,7 @@ extern uint8_t version_buffer[];
 extern uint16_t adc1_ordinary_valuetab[ADC_REPEAT_TIMES][ADC_CHANNEL_NUM];
 extern uint16_t dma_trans_complete_flag;
 extern uint16_t dma_in_working;
+extern uint16_t adc1_ordinary_value;
 
 uint8_t g_speed = FAST;
 
@@ -130,6 +131,11 @@ int main(void) {
 	printf("================================\r\n");
 
 	timer1_config();
+	dma_config1();
+	adc_config1();
+
+	printf("internal_temperature_sensor \r\n");
+	adc_ordinary_software_trigger_enable(ADC1, TRUE);
 
 //  delay_ms(1000);
 
@@ -176,6 +182,14 @@ int main(void) {
 //		  adc_config();
 //		  adc_ordinary_software_trigger_enable(ADC1, TRUE);
 //			break;
+		}
+		if(dma_flag_get(DMA1_FDT1_FLAG) != RESET){
+			dma_flag_clear(DMA1_FDT1_FLAG);
+			// printf("internal_temperature = %f deg C\r\n",
+			//(ADC_TEMP_BASE - (double)adc1_ordinary_value * ADC_VREF / 4096) / ADC_TEMP_SLOPE + 25);
+			printf("ADC temp %d\r\n", adc1_ordinary_value);
+			// adc_ordinary_conversion_trigger_set(ADC1, ADC12_ORDINARY_TRIG_SOFTWARE, FALSE);
+
 		}
 	}
 }
