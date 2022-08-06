@@ -262,7 +262,7 @@ void timer1_config(void) {
 	nvic_priority_group_config(NVIC_PRIORITY_GROUP_4);
 	nvic_irq_enable(TMR1_BRK_OVF_TRG_HALL_IRQn, 0, 0);
 	/* enable tmr1 */
-//	tmr_counter_enable(TMR1, TRUE);
+	tmr_counter_enable(TMR1, TRUE);
 
 }
 /**

@@ -153,6 +153,8 @@ void adc_gpio_config();
 void adc_dma_config();
 void adc_config();
 
+void timer1_config(void);
+
 
 
 /**
