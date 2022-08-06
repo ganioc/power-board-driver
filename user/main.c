@@ -131,6 +131,7 @@ int main(void) {
 	printf("================================\r\n");
 
 	timer1_config();
+	adc_gpio_config();
 	dma_config1();
 	adc_config1();
 
@@ -187,9 +188,13 @@ int main(void) {
 			dma_flag_clear(DMA1_FDT1_FLAG);
 			// printf("internal_temperature = %f deg C\r\n",
 			//(ADC_TEMP_BASE - (double)adc1_ordinary_value * ADC_VREF / 4096) / ADC_TEMP_SLOPE + 25);
-			printf("ADC temp %d\r\n", adc1_ordinary_value);
+			// printf("ADC temp %d\r\n", adc1_ordinary_valuetab);
 			// adc_ordinary_conversion_trigger_set(ADC1, ADC12_ORDINARY_TRIG_SOFTWARE, FALSE);
-
+			for (int i = 0; i < ADC_REPEAT_TIMES; i++) {
+				for (int j = 0; j < ADC_CHANNEL_NUM; j++) {
+					printf("adc1-%d-%d\r\n", i, adc1_ordinary_valuetab[i][j]);
+				}
+			}
 		}
 	}
 }
