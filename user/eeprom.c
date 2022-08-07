@@ -6,6 +6,7 @@
  */
 
 #include "eeprom.h"
+#include "command.h"
 
 
 uint16_t flash_buf[SECTOR_SIZE / 2]={0};
@@ -142,8 +143,9 @@ void check_EEPROM() {
 	if(rtn != 0){
 		/* write default value */
 		write_to_EEPROM(INFO_DEFAULT);
-
+		printf("info hw: %x\r\n", INFO_DEFAULT);
 	}else{
 		update_state(temp);
+		printf("info hw: %x\r\n", temp);
 	}
 }

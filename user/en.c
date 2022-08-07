@@ -19,6 +19,7 @@ void en_POWER_OFF(){
 
 void en_POWER1_ON(){
 	if(sys_state.power1_on == POWER_OFF){
+		en_POWER1_OFF();
 		return;
 	}
 
@@ -36,6 +37,7 @@ void en_POWER1_OFF(){
 
 void en_POWER2_ON(){
 	if(sys_state.power2_on == POWER_OFF){
+		en_POWER2_OFF();
 		return;
 	}
 	en_gpio_on(POWER2_EN_GPIO, POWER2_EN_PIN);
@@ -46,6 +48,7 @@ void en_POWER2_OFF(){
 }
 void en_POWER3_ON(){
 	if(sys_state.power3_on == POWER_OFF){
+		en_POWER3_OFF();
 		return;
 	}
 	en_gpio_on(POWER3_EN_GPIO, POWER3_EN_PIN);
@@ -55,6 +58,7 @@ void en_POWER3_OFF(){
 }
 void en_POWER4_ON(){
 	if(sys_state.power4_on == POWER_OFF){
+		en_POWER4_OFF();
 		return;
 	}
 	en_gpio_on(POWER4_EN_GPIO, POWER4_EN_PIN);
@@ -64,6 +68,7 @@ void en_POWER4_OFF(){
 }
 void en_POWER5_ON(){
 	if(sys_state.power5_on == POWER_OFF){
+		en_POWER5_OFF();
 		return;
 	}
 	en_gpio_on(POWER5_EN_GPIO, POWER5_EN_PIN);

@@ -58,3 +58,32 @@ OK\r\n
 
 ```
 
+4. Set POWER1~5 , ON, OFF
+
+```
+AT+OFFPOWER=1\r\n
+41 54 2b 4f 46 46 50 4f 57 45 52 3d 31 0d 0a
+AT+ONPOWER=1\r\n
+41 54 2b 4f 4e 50 4f 57 45 52 3d 31 0d 0a
+41 54 2b 4f 4e 50 4f 57 45 52 3d 32 0d 0a
+41 54 2b 4f 4e 50 4f 57 45 52 3d 33 0d 0a
+AT+GETPOWER=1\r\n
+41 54 2b 47 45 54 50 4f 57 45 52 3d 31 0d 0a
+41 54 2b 47 45 54 50 4f 57 45 52 3d 32 0d 0a
+41 54 2b 47 45 54 50 4f 57 45 52 3d 33 0d 0a
+```
+
+5.  Set POWER1 voltage, 
+
+```
+AT+POWER1=0\r\n
+
+AT+POWER1=1\r\n
+
+AT+POWER1?\r\n
+
+
+```
+
+
+

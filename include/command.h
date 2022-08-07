@@ -18,18 +18,16 @@
 #define POWER_OFF              0
 
 struct SYSTEM_STATE{
-	uint8_t vout;
-	uint8_t echo_en;
-	uint8_t vout_mode;
-	uint8_t power1_on;
-	uint8_t power2_on;
-	uint8_t power3_on;
-	uint8_t power4_on;
-	uint8_t power5_on;
-	uint16_t status;
-	uint16_t adc_val[ADC_CHANNEL_NUM];
-
-
+	__IO  uint8_t vout;
+	__IO  uint8_t echo_en;
+	__IO  uint8_t vout_mode;
+	__IO  uint8_t power1_on;
+	__IO  uint8_t power2_on;
+	__IO uint8_t power3_on;
+	__IO uint8_t power4_on;
+	__IO uint8_t power5_on;
+	__IO uint16_t status;
+	__IO uint16_t adc_val[ADC_CHANNEL_NUM];
 };
 
 void handle_command(uint8_t type,

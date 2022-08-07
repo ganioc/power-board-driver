@@ -84,27 +84,8 @@ int main(void) {
 
 	en_gpio_config();
 
-//
-//	for (int index = 0; index < TEST_BUFFER_SIZE; index++) {
-//		buffer_write[index] = index+ 0x101;
-//	}
+//	write_to_EEPROM(0x0);
 
-//	printf("Write to eeprom\r\n");
-	/* write data to flash */
-	//flash_write(TEST_FLASH_ADDRESS_START, buffer_write, TEST_BUFFER_SIZE);
-//	write_to_EEPROM(0x20);
-
-	  /* read data from flash */
-//	flash_read(TEST_FLASH_ADDRESS_START, buffer_read, TEST_BUFFER_SIZE);
-
-//	uint16_t temp=0;
-//	read_from_EEPROM(&temp);
-//	printf("read %x\r\n", temp);
-
-//	for(int index = 0; index < TEST_BUFFER_SIZE; index++){
-//		printf("%x \r\n", buffer_read[index]);
-//		delay_ms(10);
-//	}
 	check_EEPROM();
 
 	// printf("internal_temperature_sensor \r\n");
@@ -117,7 +98,7 @@ int main(void) {
 
 		/* Only the rx buffer is never overflow */
 		if (usart1_rx_ptr != usart1_rx_counter) {
-			printf("%c\r\n", usart1_rx_buffer[usart1_rx_ptr]);
+			// printf("%c\r\n", usart1_rx_buffer[usart1_rx_ptr]);
 			parse(usart1_rx_buffer[usart1_rx_ptr]);
 
 			usart1_rx_ptr++;
