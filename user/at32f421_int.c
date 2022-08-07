@@ -27,6 +27,7 @@
 /* includes ------------------------------------------------------------------*/
 #include "at32f421_int.h"
 #include "at32f421_board.h"
+#include "led.h"
 
 /** @addtogroup AT32F421_periph_template
   * @{
@@ -186,26 +187,16 @@ void USART1_IRQHandler(void)
   */
 void DMA1_Channel1_IRQHandler(void)
 {
-//	at32_led_toggle(LED2);
-//  if(dma_flag_get(DMA1_FDT1_FLAG) != RESET)
-//  {
-//    dma_flag_clear(DMA1_FDT1_FLAG);
-//    dma_trans_complete_flag = 1;
-//  }
+
 }
 
 void TMR1_BRK_OVF_TRG_HALL_IRQHandler(void) {
 	if (tmr_flag_get(TMR1, TMR_OVF_FLAG) != RESET) {
 		/* add user code... */
-//		if (dma_in_working == 0) {
-//			dma_in_working = 1;
-//			// start DMA
-//			// adc_ordinary_software_trigger_enable(ADC1, TRUE);
-//			printf("A\r\n");
-//		} else {
-//			printf("B\r\n");
-//		}
+
 //		at32_led_toggle(LED3);
+		led_red_shine();
+
 		tmr_flag_clear(TMR1, TMR_OVF_FLAG);
 
 	}

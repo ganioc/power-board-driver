@@ -48,68 +48,9 @@ extern uint16_t usart1_rx_counter;
 extern uint16_t usart1_rx_ptr;
 extern uint8_t version_buffer[];
 extern uint16_t adc1_ordinary_valuetab[ADC_REPEAT_TIMES][ADC_CHANNEL_NUM];
-extern uint16_t dma_trans_complete_flag;
-extern uint16_t dma_in_working;
-extern uint16_t adc1_ordinary_value;
+
 
 uint8_t g_speed = FAST;
-
-//void button_exint_init(void);
-//void button_isr(void);
-
-/**
- * @brief  configure button exint
- * @param  none
- * @retval none
- */
-//void button_exint_init(void) {
-//	exint_init_type exint_init_struct;
-//
-//	crm_periph_clock_enable(CRM_GPIOA_PERIPH_CLOCK, TRUE);
-//	crm_periph_clock_enable(CRM_SCFG_PERIPH_CLOCK, TRUE);
-//
-//	scfg_exint_line_config(SCFG_PORT_SOURCE_GPIOA, SCFG_PINS_SOURCE0);
-//
-//	exint_default_para_init(&exint_init_struct);
-//	exint_init_struct.line_enable = TRUE;
-//	exint_init_struct.line_mode = EXINT_LINE_INTERRUPUT;
-//	exint_init_struct.line_select = EXINT_LINE_0;
-//	exint_init_struct.line_polarity = EXINT_TRIGGER_RISING_EDGE;
-//	exint_init(&exint_init_struct);
-//
-//	nvic_priority_group_config(NVIC_PRIORITY_GROUP_4);
-//	nvic_irq_enable(EXINT1_0_IRQn, 0, 0);
-//}
-
-/**
- * @brief  button handler function
- * @param  none
- * @retval none
- */
-//void button_isr(void) {
-//	/* delay 5ms */
-//	delay_ms(5);
-//
-//	/* clear interrupt pending bit */
-//	exint_flag_clear(EXINT_LINE_0);
-//
-//	/* check input pin state */
-//	if (SET == gpio_input_data_bit_read(USER_BUTTON_PORT, USER_BUTTON_PIN)) {
-//		if (g_speed == SLOW)
-//			g_speed = FAST;
-//		else
-//			g_speed = SLOW;
-//	}
-//}
-
-/**
- * @brief  exint0 interrupt handler
- * @param  none
- * @retval none
- */
-//void EXINT1_0_IRQHandler(void) {
-//	button_isr();
-//}
 
 /**
  * @brief  main function.
@@ -124,7 +65,6 @@ int main(void) {
 
 	at32_board_init();
 
-//  button_exint_init();
 	printf("\r\n================================\r\n");
 	printf("Power Board Controller\r\n");
 
@@ -138,30 +78,15 @@ int main(void) {
 
 	en_gpio_config();
 
-
 	// printf("internal_temperature_sensor \r\n");
 	adc_ordinary_software_trigger_enable(ADC1, TRUE);
 
-//  delay_ms(1000);
-
-//	adc_ordinary_software_trigger_enable(ADC1, TRUE);
+	wdt_config();
 
 	while (1) {
-//	  printf("90\r\n");
-//	  delay_ms(500);
-//	  while(usart_flag_get(PRINT_UART, USART_TDBE_FLAG) == RESET);
-//	  usart_data_transmit(PRINT_UART, 'a');
+		/* reload wdt counter */
+		wdt_counter_reload();
 
-//    at32_led_toggle(LED2);
-//    delay_ms(g_speed * DELAY);
-//      at32_led_toggle(LED3);
-//    delay_ms(g_speed * DELAY);
-//    at32_led_toggle(LED4);
-//    delay_ms(g_speed * DELAY);
-//      if(usart_flag_get(USART1, USART_RDBF_FLAG) != RESET){
-//    	  usart1_rx_buffer[0] = usart_data_receive(USART1);
-//    	  at32_led_toggle(LED4);
-//      }
 		/* Only the rx buffer is never overflow */
 		if (usart1_rx_ptr != usart1_rx_counter) {
 			printf("%c\r\n", usart1_rx_buffer[usart1_rx_ptr]);
@@ -174,36 +99,11 @@ int main(void) {
 			}
 		}
 
-//		if (dma_trans_complete_flag == 1) {
-//			// print out the adc result
-//			for (int i = 0; i < ADC_REPEAT_TIMES; i++) {
-//				for (int j = 0; j < ADC_CHANNEL_NUM; j++) {
-//					printf("adc1-%d-%d\r\n", i, adc1_ordinary_valuetab[i][j]);
-//				}
-//			}
-//			dma_trans_complete_flag = 0;
-//		  dma_in_working = 0;
-//		  adc_dma_config();
-//		  adc_config();
-//		  adc_ordinary_software_trigger_enable(ADC1, TRUE);
-//			break;
-//		}
 		if(dma_flag_get(DMA1_FDT1_FLAG) != RESET){
 			dma_flag_clear(DMA1_FDT1_FLAG);
-			// printf("internal_temperature = %f deg C\r\n",
-			//(ADC_TEMP_BASE - (double)adc1_ordinary_value * ADC_VREF / 4096) / ADC_TEMP_SLOPE + 25);
-			// printf("ADC temp %d\r\n", adc1_ordinary_valuetab);
-			// adc_ordinary_conversion_trigger_set(ADC1, ADC12_ORDINARY_TRIG_SOFTWARE, FALSE);
-//			for (int j = 0; j < ADC_CHANNEL_NUM; j++) {
-//				uint16_t temp = 0;
-//				for (int i = 0; i < ADC_REPEAT_TIMES; i++) {
-//					printf("adc1-%d-%d\r\n", i, adc1_ordinary_valuetab[i][j]);
-//					temp += adc1_ordinary_valuetab[i][j];
-//				}
-//
-//			}
 			handle_adc_value(ADC_CHANNEL_NUM, ADC_REPEAT_TIMES, adc1_ordinary_valuetab);
 		}
+
 	}
 }
 

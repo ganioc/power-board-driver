@@ -149,7 +149,7 @@ typedef enum
 #define ADC_REPEAT_TIMES                 2
 
 /* Timer1, 1s=9999 */
-#define TIMER1_COUNT_VAL                 9999
+#define TIMER1_COUNT_VAL                 999
 
 #define UART1_BAUDRATE                  115200
 
@@ -197,6 +197,9 @@ void en_gpio_config(void);
 void en_gpio_on(gpio_type* port, uint16_t pin);
 void en_gpio_off(gpio_type* port, uint16_t pin);
 void en_gpio_toggle(gpio_type* port, uint16_t pin);
+
+void wdt_config(void);
+
 
 /**
   * @}

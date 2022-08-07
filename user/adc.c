@@ -7,6 +7,7 @@
 #include "adc.h"
 #include "command.h"
 #include "en.h"
+#include "led.h"
 
 extern struct SYSTEM_STATE sys_state;
 
@@ -70,6 +71,9 @@ void check_VIN_ADC(uint16_t val){
 		en_POWER3_ON();
 		en_POWER4_ON();
 		en_POWER5_ON();
+
+		led_red_shine_slow();
+
 	}else{
 		en_POWER_OFF();
 		en_POWER1_OFF();
@@ -77,6 +81,8 @@ void check_VIN_ADC(uint16_t val){
 		en_POWER3_OFF();
 		en_POWER4_OFF();
 		en_POWER5_OFF();
+
+		led_red_shine_fast();
 	}
 }
 /* Not used */
