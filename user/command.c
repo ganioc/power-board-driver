@@ -10,14 +10,53 @@
 
 #include "command.h"
 #include "parser.h"
+#include "eeprom.h"
 
 struct SYSTEM_STATE sys_state = {
 		vout:    0,
 		echo_en: 0,
 		vout_mode: VOUT_MODE_12V,
+		power1_on: POWER_ON,
+		power2_on: POWER_ON,
+		power3_on: POWER_ON,
+		power4_on: POWER_ON,
+		power5_on: POWER_ON,
 		status:  0,
 		adc_val: {0},
 };
+
+void update_state(uint16_t hword){
+	if(hword & VOUT_POS == 0){
+		sys_state.vout_mode = VOUT_MODE_12V;
+	}else{
+		sys_state.vout_mode = VOUT_MODE_19V;
+	}
+	if(hword & POWER1_POS == 0){
+		sys_state.power1_on = POWER_OFF;
+	}else{
+		sys_state.power1_on = POWER_ON;
+	}
+	if(hword & POWER2_POS == 0){
+		sys_state.power2_on = POWER_OFF;
+	}else{
+		sys_state.power2_on = POWER_ON;
+	}
+	if(hword & POWER3_POS == 0){
+		sys_state.power3_on = POWER_OFF;
+	}else{
+		sys_state.power3_on = POWER_ON;
+	}
+	if(hword & POWER4_POS == 0){
+		sys_state.power4_on = POWER_OFF;
+	}else{
+		sys_state.power4_on = POWER_ON;
+	}
+	if(hword & POWER5_POS == 0){
+		sys_state.power5_on = POWER_OFF;
+	}else{
+		sys_state.power5_on = POWER_ON;
+	}
+}
 
 void handle_read_command(uint8_t *tag_buffer, uint8_t tag_index) {
 	if (tag_index == 0) {

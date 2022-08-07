@@ -25,48 +25,47 @@ float get_VOUT_12V_VAL(uint16_t val){
 }
 
 void check_RT_ADC(uint16_t val){
-	printf("RT_ADC: %d\r\n", val);
+//	printf("RT_ADC: %d\r\n", val);
 }
 void check_L5_ADC(uint16_t val){
 	float v = get_VIN_VAL(val);
-	printf("L5_ADC: %d %.2f\r\n", val,v);
+//	printf("L5_ADC: %d %.2f\r\n", val,v);
 //	if(v > MAX_VOLTAGE){
 //
 //	}
 }
 void check_L4_ADC(uint16_t val){
 	float v = get_VIN_VAL(val);
-	printf("L4_ADC: %d %.2f\r\n", val,v);
+//	printf("L4_ADC: %d %.2f\r\n", val,v);
 }
 void check_L3_ADC(uint16_t val){
 	float v = get_VIN_VAL(val);
-	printf("L3_ADC: %d %.2f\r\n", val,v);
+//	printf("L3_ADC: %d %.2f\r\n", val,v);
 }
 void check_L2_ADC(uint16_t val){
 	float v = get_VIN_VAL(val);
-	printf("L2_ADC: %d %.2f\r\n", val,v);
+//	printf("L2_ADC: %d %.2f\r\n", val,v);
 }
 void check_L1_ADC(uint16_t val){
 	float v = get_VIN_VAL(val);
-	printf("L1_ADC: %d %.2f\r\n", val,v);
+//	printf("L1_ADC: %d %.2f\r\n", val,v);
 }
 void check_VOUT_ADC(uint16_t val){
 	float v = get_VOUT_12V_VAL(val);
-	printf("VOUT_ADC: %d %.2f\r\n", val, v);
+//	printf("VOUT_ADC: %d %.2f\r\n", val, v);
 }
 void check_VOUT_12V_ADC(uint16_t val){
 	float v = get_VOUT_12V_VAL(val);
-	printf("VOUT_12V_ADC: %d %.2f\r\n", val, v);
+//	printf("VOUT_12V_ADC: %d %.2f\r\n", val, v);
 
 }
 void check_VIN_ADC(uint16_t val){
 	float v = get_VIN_VAL(val);
-	printf("VIN_ADC: %d %.2f\r\n", val, v);
+//	printf("VIN_ADC: %d %.2f\r\n", val, v);
 
 	if( v <= DC_MAX && v >= DC_MIN){
 		en_POWER_ON();
 		en_POWER1_ON();
-
 		en_POWER2_ON();
 		en_POWER3_ON();
 		en_POWER4_ON();
@@ -87,14 +86,14 @@ void check_VIN_ADC(uint16_t val){
 }
 /* Not used */
 void check_IN_ADC(uint16_t val){
-	printf("IN_ADC: %d\r\n", val);
+//	printf("IN_ADC: %d\r\n", val);
 }
 void check_TEMP_ADC(uint16_t val){
-	printf("TEMP_ADC: %d %.2f\r\n", val, get_TEMP_VAL(val));
+//	printf("TEMP_ADC: %d %.2f\r\n", val, get_TEMP_VAL(val));
 
 }
 void check_VREF_ADC(uint16_t val){
-	printf("VREF_ADC: %d %.2f\r\n", val, get_VREF_VAL(val));
+//	printf("VREF_ADC: %d %.2f\r\n", val, get_VREF_VAL(val));
 }
 
 void check_adc_value(uint16_t nums,uint16_t adc[]){
@@ -116,7 +115,7 @@ void handle_adc_value(uint16_t nums, uint16_t times, uint16_t table[ADC_REPEAT_T
 	for (int j = 0; j < nums; j++) {
 		uint16_t temp = 0;
 		for (int i = 0; i < times; i++) {
-			printf("adc1-%d-%d\r\n", i, table[i][j]);
+//			printf("adc1-%d-%d\r\n", i, table[i][j]);
 			temp += table[i][j];
 		}
 		sys_state.adc_val[j] = temp/times;

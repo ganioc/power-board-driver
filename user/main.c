@@ -30,6 +30,7 @@
 #include "at32f421_clock.h"
 #include "parser.h"
 #include "adc.h"
+#include "eeprom.h"
 
 /** @addtogroup AT32F421_periph_template
  * @{
@@ -51,6 +52,11 @@ extern uint16_t adc1_ordinary_valuetab[ADC_REPEAT_TIMES][ADC_CHANNEL_NUM];
 
 
 uint8_t g_speed = FAST;
+
+
+//uint16_t buffer_write[TEST_BUFFER_SIZE];
+//uint16_t buffer_read[TEST_BUFFER_SIZE];
+
 
 /**
  * @brief  main function.
@@ -78,9 +84,31 @@ int main(void) {
 
 	en_gpio_config();
 
+//
+//	for (int index = 0; index < TEST_BUFFER_SIZE; index++) {
+//		buffer_write[index] = index+ 0x101;
+//	}
+
+//	printf("Write to eeprom\r\n");
+	/* write data to flash */
+	//flash_write(TEST_FLASH_ADDRESS_START, buffer_write, TEST_BUFFER_SIZE);
+//	write_to_EEPROM(0x20);
+
+	  /* read data from flash */
+//	flash_read(TEST_FLASH_ADDRESS_START, buffer_read, TEST_BUFFER_SIZE);
+
+//	uint16_t temp=0;
+//	read_from_EEPROM(&temp);
+//	printf("read %x\r\n", temp);
+
+//	for(int index = 0; index < TEST_BUFFER_SIZE; index++){
+//		printf("%x \r\n", buffer_read[index]);
+//		delay_ms(10);
+//	}
+	check_EEPROM();
+
 	// printf("internal_temperature_sensor \r\n");
 	adc_ordinary_software_trigger_enable(ADC1, TRUE);
-
 	wdt_config();
 
 	while (1) {
