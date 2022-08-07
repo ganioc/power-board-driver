@@ -128,7 +128,7 @@ int write_to_EEPROM(uint16_t info_hword){
 int read_from_EEPROM(uint16_t * info_hword){
 	flash_read(EEPROM_FLASH_ADDRESS_START, data_buf, 3);
 
-	printf("-> %x %x\r\n",data_buf[0],data_buf[1]);
+	printf("Magic Word -> %x %x\r\n",data_buf[0],data_buf[1]);
 
 	if(data_buf[0] != 0x5255 || data_buf[1] != 0x4646){
 		return -1;
@@ -143,9 +143,9 @@ void check_EEPROM() {
 	if(rtn != 0){
 		/* write default value */
 		write_to_EEPROM(INFO_DEFAULT);
-		printf("info hw: %x\r\n", INFO_DEFAULT);
+		printf("info half word: %x\r\n", INFO_DEFAULT);
 	}else{
 		update_state(temp);
-		printf("info hw: %x\r\n", temp);
+		printf("info half word: %x\r\n", temp);
 	}
 }
