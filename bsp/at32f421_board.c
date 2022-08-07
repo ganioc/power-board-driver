@@ -433,6 +433,23 @@ void at32_led_init(led_type led)
   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
   gpio_init(led_gpio_port[led], &gpio_init_struct);
 }
+void at32_io_init(crm_periph_clock_type crm_clock,
+		uint16_t pin,gpio_type* port ){
+	gpio_init_type gpio_init_struct;
+	/* enable the gpio clock */
+	crm_periph_clock_enable(crm_clock, TRUE);
+	/* set default parameter */
+	gpio_default_para_init(&gpio_init_struct);
+
+	/* configure the led gpio */
+	gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_STRONGER;
+	gpio_init_struct.gpio_out_type  = GPIO_OUTPUT_PUSH_PULL;
+	gpio_init_struct.gpio_mode = GPIO_MODE_OUTPUT;
+	gpio_init_struct.gpio_pins = pin;
+	gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
+	gpio_init(port, &gpio_init_struct);
+}
+
 
 /**
   * @brief  turns selected led on.
@@ -564,6 +581,43 @@ void delay_sec(uint16_t sec)
     delay_ms(500);
   }
 }
+
+void en_gpio_on(gpio_type* port, uint16_t pin){
+	port->scr = pin;
+}
+void en_gpio_off(gpio_type* port, uint16_t pin){
+	port->clr = pin;
+}
+void en_gpio_toggle(gpio_type* port, uint16_t pin){
+	port->odt ^= pin;
+}
+
+void en_gpio_config(void) {
+	at32_io_init(POWER2_EN_CRM_CLK, POWER2_EN_PIN, POWER2_EN_GPIO);
+	en_gpio_off(POWER2_EN_GPIO, POWER2_EN_PIN);
+
+	at32_io_init(POWER3_EN_CRM_CLK, POWER3_EN_PIN, POWER3_EN_GPIO);
+	en_gpio_off(POWER3_EN_GPIO, POWER3_EN_PIN);
+
+	at32_io_init(POWER4_EN_CRM_CLK, POWER4_EN_PIN, POWER4_EN_GPIO);
+	en_gpio_off(POWER4_EN_GPIO, POWER4_EN_PIN);
+
+	at32_io_init(POWER5_EN_CRM_CLK, POWER5_EN_PIN, POWER5_EN_GPIO);
+	en_gpio_off(POWER5_EN_GPIO, POWER5_EN_PIN);
+
+	at32_io_init(VOUT_IO_CRM_CLK, VOUT_IO_PIN, VOUT_IO_GPIO);
+	en_gpio_off(VOUT_IO_GPIO, VOUT_IO_PIN);
+
+	at32_io_init(POWER1_EN_CRM_CLK, POWER1_EN_PIN, POWER1_EN_GPIO);
+	en_gpio_off(POWER1_EN_GPIO, POWER1_EN_PIN);
+
+	at32_io_init(POWER_ON_CRM_CLK, POWER_ON_PIN, POWER_ON_GPIO);
+	en_gpio_off(POWER_ON_GPIO, POWER_ON_PIN);
+
+}
+
+
+
 
 /**
   * @}

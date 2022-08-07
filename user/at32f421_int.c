@@ -197,15 +197,15 @@ void DMA1_Channel1_IRQHandler(void)
 void TMR1_BRK_OVF_TRG_HALL_IRQHandler(void) {
 	if (tmr_flag_get(TMR1, TMR_OVF_FLAG) != RESET) {
 		/* add user code... */
-		if (dma_in_working == 0) {
-			dma_in_working = 1;
-			// start DMA
-			// adc_ordinary_software_trigger_enable(ADC1, TRUE);
-			printf("A\r\n");
-		} else {
-			printf("B\r\n");
-		}
-		at32_led_toggle(LED3);
+//		if (dma_in_working == 0) {
+//			dma_in_working = 1;
+//			// start DMA
+//			// adc_ordinary_software_trigger_enable(ADC1, TRUE);
+//			printf("A\r\n");
+//		} else {
+//			printf("B\r\n");
+//		}
+//		at32_led_toggle(LED3);
 		tmr_flag_clear(TMR1, TMR_OVF_FLAG);
 
 	}

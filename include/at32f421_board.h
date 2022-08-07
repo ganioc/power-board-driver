@@ -81,6 +81,39 @@ typedef enum
 #define LED4_GPIO_CRM_CLK                CRM_GPIOB_PERIPH_CLOCK
 #endif
 
+
+#define EN_IO_NUM                        7
+
+#define POWER2_EN_PIN                    GPIO_PINS_5
+#define POWER2_EN_GPIO                   GPIOB
+#define POWER2_EN_CRM_CLK                CRM_GPIOB_PERIPH_CLOCK
+
+#define POWER3_EN_PIN                    GPIO_PINS_4
+#define POWER3_EN_GPIO                   GPIOB
+#define POWER3_EN_CRM_CLK                CRM_GPIOB_PERIPH_CLOCK
+
+#define POWER4_EN_PIN                    GPIO_PINS_3
+#define POWER4_EN_GPIO                   GPIOB
+#define POWER4_EN_CRM_CLK                CRM_GPIOB_PERIPH_CLOCK
+
+#define POWER5_EN_PIN                    GPIO_PINS_15
+#define POWER5_EN_GPIO                   GPIOA
+#define POWER5_EN_CRM_CLK                CRM_GPIOA_PERIPH_CLOCK
+
+#define VOUT_IO_PIN                      GPIO_PINS_12
+#define VOUT_IO_GPIO                     GPIOA
+#define VOUT_IO_CRM_CLK                  CRM_GPIOA_PERIPH_CLOCK
+
+#define POWER1_EN_PIN                    GPIO_PINS_11
+#define POWER1_EN_GPIO                   GPIOA
+#define POWER1_EN_CRM_CLK                CRM_GPIOA_PERIPH_CLOCK
+
+#define POWER_ON_PIN                     GPIO_PINS_8
+#define POWER_ON_GPIO                    GPIOA
+#define POWER_ON_CRM_CLK                 CRM_GPIOA_PERIPH_CLOCK
+
+
+
 /**************** define print uart ******************/
 #define PRINT_UART                       USART1
 #define PRINT_UART_CRM_CLK               CRM_USART1_PERIPH_CLOCK
@@ -159,6 +192,12 @@ void timer1_config(void);
 
 void dma_config1();
 void adc_config1(void);
+
+void en_gpio_config(void);
+void en_gpio_on(gpio_type* port, uint16_t pin);
+void en_gpio_off(gpio_type* port, uint16_t pin);
+void en_gpio_toggle(gpio_type* port, uint16_t pin);
+
 /**
   * @}
   */

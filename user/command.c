@@ -12,8 +12,10 @@
 #include "parser.h"
 
 struct SYSTEM_STATE sys_state = {
-		vout: 0,
+		vout:    0,
 		echo_en: 0,
+		vout_mode: VOUT_MODE_12V,
+		status:  0,
 		adc_val: {0},
 };
 
