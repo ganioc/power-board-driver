@@ -96,7 +96,7 @@ void check_VREF_ADC(uint16_t val){
 //	printf("VREF_ADC: %d %.2f\r\n", val, get_VREF_VAL(val));
 }
 
-void check_adc_value(uint16_t nums,uint16_t adc[]){
+void check_adc_value(uint16_t nums, volatile uint16_t adc[]){
 	check_RT_ADC(adc[RT_ADC_ID]);
 	check_L5_ADC(adc[L5_ADC_ID]);
 	check_L4_ADC(adc[L4_ADC_ID]);

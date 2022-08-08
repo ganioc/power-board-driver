@@ -38,6 +38,10 @@
 
 /* functions */
 void handle_adc_value(uint16_t nums, uint16_t times, uint16_t table[ADC_REPEAT_TIMES][ADC_CHANNEL_NUM]);
+float get_VIN_VAL(uint16_t val);
+float get_VOUT_12V_VAL(uint16_t val);
+float get_TEMP_VAL(uint16_t val);
+float get_VREF_VAL(uint16_t val);
 
 
 #endif /* INCLUDE_ADC_H_ */

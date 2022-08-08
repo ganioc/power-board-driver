@@ -108,6 +108,14 @@ AT+POWER1?\r\n
 6. Get Voltage,
 
 ```
+AT+GETVIN?\r\n
+41 54 2b 47 45 54 56 49 4e 3f 0d 0a
+
+AT+GETV12?\r\n
+41 54 2b 47 45 54 56 31 32 3f 0d 0a
+
+AT+GETVOUT?\r\n
+41 54 2b 47 45 54 56 4f 55 54 3f 0d 0a
 
 
 ```
@@ -117,7 +125,8 @@ AT+POWER1?\r\n
 
 
 ```
-
+AT+GETTEMP?\r\n
+41 54 2b 47 45 54 54 45 4d 50 3f 0d 0a 
 
 ```
 
@@ -125,6 +134,8 @@ AT+POWER1?\r\n
 
 
 ```
+AT+GETVREF?\r\n
+41 54 2b 47 45 54 56 52 45 46 3f 0d 0a
 
 ```
 
