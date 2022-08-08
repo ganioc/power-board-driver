@@ -95,6 +95,12 @@ void handle_read_command(uint8_t *tag_buffer, uint8_t tag_index) {
 	}
 
 }
+void check_state_by_command(volatile uint8_t * s, uint8_t v){
+	if(*s != v){
+		*s = v;
+		backup_state();
+	}
+}
 void handle_write_command(uint8_t *tag_buffer, uint8_t tag_index,
 		uint8_t *value_buffer, uint8_t value_index) {
 	if (tag_index == 0 || value_index == 0) {
@@ -118,48 +124,46 @@ void handle_write_command(uint8_t *tag_buffer, uint8_t tag_index,
 	} else if(strcmp(tag_buffer, "OFFPOWER") == 0){
 		switch(value_buffer[0]){
 		case '1':
-			sys_state.power1_on = POWER_OFF;
+			check_state_by_command(&(sys_state.power1_on), POWER_OFF);
 			break;
 		case '2':
-			sys_state.power2_on = POWER_OFF;
+			check_state_by_command(&(sys_state.power2_on), POWER_OFF);
 			break;
 		case '3':
-			sys_state.power3_on = POWER_OFF;
+			check_state_by_command(&(sys_state.power3_on), POWER_OFF);
 			break;
 		case '4':
-			sys_state.power4_on = POWER_OFF;
+			check_state_by_command(&(sys_state.power4_on), POWER_OFF);
 			break;
 		case '5':
-			sys_state.power5_on = POWER_OFF;
+			check_state_by_command(&(sys_state.power5_on), POWER_OFF);
 			break;
 		default:
 			printf("ERROR\r\n");
 			return;
 		}
-		backup_state();
 		printf("OK\r\n");
 	} else if(strcmp(tag_buffer, "ONPOWER") == 0){
 		switch(value_buffer[0]){
 		case '1':
-			sys_state.power1_on = POWER_ON;
+			check_state_by_command(&(sys_state.power1_on), POWER_ON);
 			break;
 		case '2':
-			sys_state.power2_on = POWER_ON;
+			check_state_by_command(&(sys_state.power2_on), POWER_ON);
 			break;
 		case '3':
-			sys_state.power3_on = POWER_ON;
+			check_state_by_command(&(sys_state.power3_on), POWER_ON);
 			break;
 		case '4':
-			sys_state.power4_on = POWER_ON;
+			check_state_by_command(&(sys_state.power4_on), POWER_ON);
 			break;
 		case '5':
-			sys_state.power5_on = POWER_ON;
+			check_state_by_command(&(sys_state.power5_on), POWER_ON);
 			break;
 		default:
 			printf("ERROR\r\n");
 			return;
 		}
-		backup_state();
 		printf("OK\r\n");
 	}else if(strcmp(tag_buffer, "GETPOWER") == 0){
 		switch(value_buffer[0]){
@@ -185,17 +189,16 @@ void handle_write_command(uint8_t *tag_buffer, uint8_t tag_index,
 	}else if(strcmp(tag_buffer, "POWER1") == 0){
 		switch(value_buffer[0]){
 		case '0':
-			sys_state.vout_mode = 0;
+			check_state_by_command(&(sys_state.vout_mode),0);
 			break;
 		case '1':
-			sys_state.vout_mode = 1;
+			check_state_by_command(&(sys_state.vout_mode),1);
 			break;
 		default:
 			printf("ERROR\r\n");
 			return;
 		}
 
-		backup_state();
 		printf("OK\r\n");
 	}
 	else {

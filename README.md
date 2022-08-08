@@ -105,5 +105,30 @@ AT+POWER1?\r\n
 
 ```
 
+6. Get Voltage,
+
+```
+
+
+```
+
+
+7. Get Temperature
+
+
+```
+
+
+```
+
+8. Get Ref Voltage,
+
+
+```
+
+```
+
+
+
 
 
