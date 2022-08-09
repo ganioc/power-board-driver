@@ -39,8 +39,8 @@
 
 extern uint8_t usart1_rx_buffer[];
 extern uint16_t usart1_rx_counter;
-extern uint16_t dma_trans_complete_flag;
-extern uint16_t dma_in_working;
+//extern uint16_t dma_trans_complete_flag;
+//extern uint16_t dma_in_working;
 
 /**
   * @brief  this function handles nmi exception.
@@ -196,6 +196,8 @@ void TMR1_BRK_OVF_TRG_HALL_IRQHandler(void) {
 
 //		at32_led_toggle(LED3);
 		led_red_shine();
+//		led_blue_shine();
+//		led_green_shine();
 
 		tmr_flag_clear(TMR1, TMR_OVF_FLAG);
 

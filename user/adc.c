@@ -53,6 +53,18 @@ void check_L1_ADC(uint16_t val){
 void check_VOUT_ADC(uint16_t val){
 	float v = get_VOUT_12V_VAL(val);
 //	printf("VOUT_ADC: %d %.2f\r\n", val, v);
+	if( v >= 10.0){
+		if(sys_state.vout_mode == VOUT_MODE_12V){
+			led_green_on();
+			led_blue_off();
+		}else{
+			led_blue_on();
+			led_green_off();
+		}
+	}else{
+		led_green_off();
+		led_blue_off();
+	}
 }
 void check_VOUT_12V_ADC(uint16_t val){
 	float v = get_VOUT_12V_VAL(val);
