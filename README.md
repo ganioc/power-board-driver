@@ -31,20 +31,6 @@ OK\r\n
 
 不用
 
-```
-AT+VCCOUT?\r\n
-41 54 2b 56 43 43 4f 55 54 3f 0D 0A
-// 12V
-0\r\n 
-// 19V
-1\r\n 
-AT+VCCOUT=0\r\n
-41 54 2b 56 43 43 4f 55 54 3d 30 0d 0a
-OK\r\n
-AT+VCCOUT=1\r\n
-41 54 2b 56 43 43 4f 55 54 3d 31 0d 0a
-OK\r\n
-```
 
 3. Set Echo Mode
 
@@ -96,8 +82,10 @@ AT+GETPOWER=1\r\n
 设置，查询POWER1的电压
 
 ```
+设置12V
 AT+POWER1=0\r\n
 41 54 2b 50 4f 57 45 52 31 3d 30 0d 0a 
+设置19V
 AT+POWER1=1\r\n
 41 54 2b 50 4f 57 45 52 31 3d 31 0d 0a 
 AT+POWER1?\r\n
