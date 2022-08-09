@@ -27,11 +27,6 @@ OK\r\n
 41 54 0D 0A
 ```
 
-2. Set VCC_OUT
-
-不用
-
-
 3. Set Echo Mode
 
 不用
@@ -109,7 +104,7 @@ AT+GETVOUT?\r\n
 ```
 
 
-7. Get Temperature
+7. Get Temperature, 芯片内部的温度值
 
 
 ```
@@ -118,7 +113,7 @@ AT+GETTEMP?\r\n
 
 ```
 
-8. Get Ref Voltage,
+8. Get Ref Voltage,芯片的参考电压, 3.3V
 
 
 ```
