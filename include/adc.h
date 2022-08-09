@@ -17,6 +17,7 @@
 #define VIN_ADC_DIVISION    0.04
 #define MAX_CURRENT         3.0
 #define MAX_VOLTAGE         (3.0*0.05)
+#define RESISTOR_VALUE      0.1
 
 #define RT_ADC_ID           0
 #define L5_ADC_ID           1
@@ -42,6 +43,7 @@ float get_VIN_VAL(uint16_t val);
 float get_VOUT_12V_VAL(uint16_t val);
 float get_TEMP_VAL(uint16_t val);
 float get_VREF_VAL(uint16_t val);
+float get_CURRENT_VAL(uint16_t val);
 
 
 #endif /* INCLUDE_ADC_H_ */

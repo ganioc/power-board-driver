@@ -202,6 +202,27 @@ void handle_write_command(uint8_t *tag_buffer, uint8_t tag_index,
 		}
 
 		printf("OK\r\n");
+	}else if(strcmp(tag_buffer, "GETCUR") == 0){
+		switch(value_buffer[0]){
+		case '1':
+			printf("%.2f\r\n", get_CURRENT_VAL(sys_state.adc_val[L1_ADC_ID]));
+			break;
+		case '2':
+			printf("%.2f\r\n", get_CURRENT_VAL(sys_state.adc_val[L2_ADC_ID]));
+			break;
+		case '3':
+			printf("%.2f\r\n", get_CURRENT_VAL(sys_state.adc_val[L3_ADC_ID]));
+			break;
+		case '4':
+			printf("%.2f\r\n", get_CURRENT_VAL(sys_state.adc_val[L4_ADC_ID]));
+			break;
+		case '5':
+			printf("%.2f\r\n", get_CURRENT_VAL(sys_state.adc_val[L5_ADC_ID]));
+			break;
+		default:
+			printf("ERROR\r\n");
+			return;
+		}
 	}
 	else {
 		printf("ERROR\r\n");

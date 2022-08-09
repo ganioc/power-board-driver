@@ -122,6 +122,20 @@ AT+GETVREF?\r\n
 
 ```
 
+9. Get Current from I1,I2,I3, I4, I5
+
+测量电流，电阻为0.1 ohm
+I = V/R,
+
+1~5
+
+```
+AT+GETCUR=1\r\n
+41 54 2b 47 45 54 43 55 52 3d 31 0d 0a
+AT+GETCUR=2\r\n
+41 54 2b 47 45 54 43 55 52 3d 32 0d 0a
+```
+
 
 
 

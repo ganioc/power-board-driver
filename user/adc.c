@@ -23,6 +23,11 @@ float get_VIN_VAL(uint16_t val){
 float get_VOUT_12V_VAL(uint16_t val){
 	return ((float)val * ADC_VREF / 4096)* 23.0;
 }
+float get_CURRENT_VAL(uint16_t val){
+	float v = (float)val * ADC_VREF / 4096;
+	float i = v* 10.0;
+	return i;
+}
 
 void check_RT_ADC(uint16_t val){
 //	printf("RT_ADC: %d\r\n", val);
@@ -49,6 +54,7 @@ void check_L2_ADC(uint16_t val){
 void check_L1_ADC(uint16_t val){
 	float v = get_VIN_VAL(val);
 //	printf("L1_ADC: %d %.2f\r\n", val,v);
+
 }
 void check_VOUT_ADC(uint16_t val){
 	float v = get_VOUT_12V_VAL(val);
@@ -113,7 +119,7 @@ void check_adc_value(uint16_t nums, volatile uint16_t adc[]){
 	check_L5_ADC(adc[L5_ADC_ID]);
 	check_L4_ADC(adc[L4_ADC_ID]);
 	check_L3_ADC(adc[L3_ADC_ID]);
-	check_L2_ADC(adc[L1_ADC_ID]);
+	check_L2_ADC(adc[L2_ADC_ID]);
 	check_L1_ADC(adc[L1_ADC_ID]);
 	check_VOUT_ADC(adc[VOUT_ADC_ID]);
 	check_VOUT_12V_ADC(adc[VOUT_12V_ADC_ID]);
