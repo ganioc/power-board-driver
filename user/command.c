@@ -85,9 +85,7 @@ void handle_read_command(uint8_t *tag_buffer, uint8_t tag_index) {
 		printf("OK\r\n");
 		return;
 	}
-	if (strcmp(tag_buffer, "VCCOUT") == 0) {
-		printf("%d\r\n", sys_state.vout);
-	} else if (strcmp(tag_buffer, "ECHO") == 0) {
+	if (strcmp(tag_buffer, "ECHO") == 0) {
 		printf("%d\r\n", sys_state.echo_en);
 	} else if (strcmp(tag_buffer, "POWER1") == 0) {
 		printf("%d\r\n", sys_state.vout_mode);
@@ -118,14 +116,7 @@ void handle_write_command(uint8_t *tag_buffer, uint8_t tag_index,
 		printf("ERROR\r\n");
 		return;
 	}
-	if (strcmp(tag_buffer, "VCCOUT") == 0) {
-		if (value_buffer[0] == '0') {
-			sys_state.vout = 0;
-		} else {
-			sys_state.vout = 1;
-		}
-		printf("OK\r\n");
-	} else if (strcmp(tag_buffer, "ECHO") == 0) {
+	if (strcmp(tag_buffer, "ECHO") == 0) {
 		if (value_buffer[0] == '0') {
 			sys_state.echo_en = 0;
 		} else {
@@ -221,7 +212,6 @@ void handle_command(uint8_t type, uint8_t *tag_buffer, uint8_t tag_index,
 		uint8_t *value_buffer, uint8_t value_index) {
 	if (type == AT_TYPE_READ) {
 		handle_read_command(tag_buffer, tag_index);
-
 	} else if (type == AT_TYPE_WRITE) {
 		handle_write_command(tag_buffer, tag_index, value_buffer, value_index);
 	} else {
