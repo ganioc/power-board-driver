@@ -127,9 +127,14 @@ AT+GETVREF?\r\n
 测量电流，电阻为0.1 ohm
 I = V/R,
 
-1~5
+1~5 -> 分路电流
+
+0 -> 总电流
+
 
 ```
+AT+GETCUR=0\r\n
+41 54 2b 47 45 54 43 55 52 3d 30 0d 0a
 AT+GETCUR=1\r\n
 41 54 2b 47 45 54 43 55 52 3d 31 0d 0a
 AT+GETCUR=2\r\n

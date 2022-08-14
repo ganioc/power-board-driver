@@ -28,7 +28,11 @@ float get_CURRENT_VAL(uint16_t val){
 	float i = v* 10.0;
 	return i;
 }
-
+float get_TOTAL_CURRENT_VAL(uint16_t val){
+	float v = (float) val * ADC_VREF / 4096;
+	float i = v / 0.03;
+	return i;
+}
 void check_RT_ADC(uint16_t val){
 //	printf("RT_ADC: %d\r\n", val);
 }

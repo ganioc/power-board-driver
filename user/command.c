@@ -204,6 +204,9 @@ void handle_write_command(uint8_t *tag_buffer, uint8_t tag_index,
 		printf("OK\r\n");
 	}else if(strcmp(tag_buffer, "GETCUR") == 0){
 		switch(value_buffer[0]){
+		case '0':
+			printf("%.2f\r\n", get_TOTAL_CURRENT_VAL(sys_state.adc_val[IN_ADC_ID]));
+			break;
 		case '1':
 			printf("%.2f\r\n", get_CURRENT_VAL(sys_state.adc_val[L1_ADC_ID]));
 			break;

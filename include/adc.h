@@ -44,6 +44,6 @@ float get_VOUT_12V_VAL(uint16_t val);
 float get_TEMP_VAL(uint16_t val);
 float get_VREF_VAL(uint16_t val);
 float get_CURRENT_VAL(uint16_t val);
-
+float get_TOTAL_CURRENT_VAL(uint16_t val);
 
 #endif /* INCLUDE_ADC_H_ */
