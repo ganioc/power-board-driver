@@ -141,6 +141,19 @@ AT+GETCUR=2\r\n
 41 54 2b 47 45 54 43 55 52 3d 32 0d 0a
 ```
 
+### IDE
+使用了AT32 IDE, eclipse 作为集成开发环境。
+
+### Changes
+
+```
+1.5 - Power 1 will be ON after power up, no persistent state storage;
+
+
+
+```
+
+
 
 
 

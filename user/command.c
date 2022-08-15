@@ -30,9 +30,9 @@ void backup_state(){
 	if(sys_state.vout_mode == VOUT_MODE_19V){
 		temp += VOUT_POS;
 	}
-	if(sys_state.power1_on == 1){
-		temp += POWER1_POS;
-	}
+//	if(sys_state.power1_on == 1){
+	temp += POWER1_POS;
+//	}
 	if(sys_state.power2_on == 1){
 		temp += POWER2_POS;
 	}
@@ -53,11 +53,11 @@ void update_state(uint16_t hword){
 	}else{
 		sys_state.vout_mode = VOUT_MODE_19V;
 	}
-	if((hword & POWER1_POS) == 0){
-		sys_state.power1_on = POWER_OFF;
-	}else{
-		sys_state.power1_on = POWER_ON;
-	}
+//	if((hword & POWER1_POS) == 0){
+//		sys_state.power1_on = POWER_ON;
+//	}else{
+//		sys_state.power1_on = POWER_ON;
+//	}
 	if((hword & POWER2_POS) == 0){
 		sys_state.power2_on = POWER_OFF;
 	}else{

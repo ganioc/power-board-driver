@@ -6,6 +6,7 @@
  */
 #include "en.h"
 #include "command.h"
+#include "led.h"
 
 extern struct SYSTEM_STATE sys_state;
 
@@ -20,6 +21,7 @@ void en_POWER_OFF(){
 void en_POWER1_ON(){
 	if(sys_state.power1_on == POWER_OFF){
 		en_POWER1_OFF();
+
 		return;
 	}
 
@@ -32,6 +34,8 @@ void en_POWER1_ON(){
 }
 void en_POWER1_OFF(){
 	en_gpio_on(POWER1_EN_GPIO, POWER1_EN_PIN);
+	led_green_off();
+	led_blue_off();
 }
 
 
