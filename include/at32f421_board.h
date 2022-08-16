@@ -112,6 +112,10 @@ typedef enum
 #define POWER_ON_GPIO                    GPIOA
 #define POWER_ON_CRM_CLK                 CRM_GPIOA_PERIPH_CLOCK
 
+#define CLK_PIN                          GPIO_PINS_2
+#define CLK_GPIO                         GPIOB
+#define CLK_CRM_CLK                      CRM_GPIOB_PERIPH_CLOCK
+
 
 
 /**************** define print uart ******************/
@@ -199,7 +203,7 @@ void en_gpio_off(gpio_type* port, uint16_t pin);
 void en_gpio_toggle(gpio_type* port, uint16_t pin);
 
 void wdt_config(void);
-
+void gen_gpio_config();
 
 /**
   * @}

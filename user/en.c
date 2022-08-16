@@ -10,22 +10,33 @@
 
 extern struct SYSTEM_STATE sys_state;
 
-void en_POWER_ON(){
-	en_gpio_on(POWER_ON_GPIO, POWER_ON_PIN);
+void en_CLK(){
+	delay_us(1);
+	en_gpio_on(CLK_GPIO, CLK_PIN);
+	delay_us(1);
+	en_gpio_off(CLK_GPIO, CLK_PIN);
+}
 
+void en_POWER_ON(){
+	en_gpio_off(POWER_ON_GPIO, POWER_ON_PIN);
+	en_CLK();
 }
 void en_POWER_OFF(){
-	en_gpio_off(POWER_ON_GPIO, POWER_ON_PIN);
+	en_gpio_on(POWER_ON_GPIO, POWER_ON_PIN);
+	en_CLK();
 }
 
 void en_POWER1_ON(){
 	if(sys_state.power1_on == POWER_OFF){
 		en_POWER1_OFF();
+		en_CLK();
 
 		return;
 	}
 
-	en_gpio_off(POWER1_EN_GPIO, POWER1_EN_PIN);
+	en_gpio_on(POWER1_EN_GPIO, POWER1_EN_PIN);
+	en_CLK();
+
 	if( sys_state.vout_mode == VOUT_MODE_12V){
 		en_gpio_off(VOUT_IO_GPIO, VOUT_IO_PIN);
 	}else{
@@ -33,7 +44,8 @@ void en_POWER1_ON(){
 	}
 }
 void en_POWER1_OFF(){
-	en_gpio_on(POWER1_EN_GPIO, POWER1_EN_PIN);
+	en_gpio_off(POWER1_EN_GPIO, POWER1_EN_PIN);
+	en_CLK();
 	led_green_off();
 	led_blue_off();
 }

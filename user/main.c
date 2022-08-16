@@ -79,6 +79,7 @@ int main(void) {
 
 	timer1_config();
 	adc_gpio_config();
+
 	dma_config1();
 	adc_config1();
 

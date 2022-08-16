@@ -48,7 +48,7 @@ crm_periph_clock_type led_gpio_crm_clk[LED_NUM] = {LED2_GPIO_CRM_CLK, LED3_GPIO_
 uint8_t usart1_rx_buffer[USART1_RX_BUFFER_SIZE];
 uint16_t usart1_rx_counter = 0;
 uint16_t usart1_rx_ptr = 0;
-uint8_t version_buffer[]={'1','.','2', 0};
+uint8_t version_buffer[]={'2','.','0', 0};
 
 /* adc1 buffer */
 __IO uint16_t adc1_ordinary_valuetab[ADC_REPEAT_TIMES][ADC_CHANNEL_NUM] = {0};
@@ -614,6 +614,10 @@ void en_gpio_config(void) {
 	at32_io_init(POWER_ON_CRM_CLK, POWER_ON_PIN, POWER_ON_GPIO);
 	en_gpio_off(POWER_ON_GPIO, POWER_ON_PIN);
 
+	// CLK control
+	at32_io_init(CLK_CRM_CLK, CLK_PIN, CLK_GPIO);
+	en_gpio_off(CLK_GPIO, CLK_PIN);
+
 }
 
 void wdt_config(void){
@@ -642,7 +646,23 @@ void wdt_config(void){
 	/* enable wdt */
 	wdt_enable();
 }
+void gen_gpio_config() {
+	gpio_init_type gpio_init_struct;
 
+	/* enable the led clock */
+	crm_periph_clock_enable(CLK_CRM_CLK, TRUE);
+
+	/* set default parameter */
+	gpio_default_para_init(&gpio_init_struct);
+
+	/* configure the led gpio */
+	gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_STRONGER;
+	gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
+	gpio_init_struct.gpio_mode = GPIO_MODE_OUTPUT;
+	gpio_init_struct.gpio_pins = CLK_PIN;
+	gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
+	gpio_init(CLK_GPIO, &gpio_init_struct);
+}
 
 /**
   * @}

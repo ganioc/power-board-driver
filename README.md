@@ -7,6 +7,8 @@ baud rate : 115200
 通过串口来设置电源板的参数，开关电源通道。设置状态保存在FLASH 中.
 
 
+
+
 ### Commands
 Start with "AT", end with "\r\n"
 
@@ -149,6 +151,7 @@ AT+GETCUR=2\r\n
 ```
 1.5 - Power 1 will be ON after power up, no persistent state storage;
 
+2.0 - New version, for D-Flipflop to control IN-power and channe 1 power;
 
 
 ```
