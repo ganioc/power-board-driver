@@ -612,7 +612,7 @@ void en_gpio_config(void) {
 	en_gpio_off(POWER1_EN_GPIO, POWER1_EN_PIN);
 
 	at32_io_init(POWER_ON_CRM_CLK, POWER_ON_PIN, POWER_ON_GPIO);
-	en_gpio_off(POWER_ON_GPIO, POWER_ON_PIN);
+	en_gpio_on(POWER_ON_GPIO, POWER_ON_PIN);
 
 	// CLK control
 	at32_io_init(CLK_CRM_CLK, CLK_PIN, CLK_GPIO);
