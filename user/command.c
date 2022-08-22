@@ -211,16 +211,16 @@ void handle_write_command(uint8_t *tag_buffer, uint8_t tag_index,
 			printf("%.2f\r\n", get_CURRENT_VAL(sys_state.adc_val[L1_ADC_ID]));
 			break;
 		case '2':
-			printf("%.2f\r\n", get_CURRENT_VAL(sys_state.adc_val[L2_ADC_ID]));
+			printf("%.2f\r\n", get_CURRENT_VAL_80(sys_state.adc_val[L2_ADC_ID]));
 			break;
 		case '3':
-			printf("%.2f\r\n", get_CURRENT_VAL(sys_state.adc_val[L3_ADC_ID]));
+			printf("%.2f\r\n", get_CURRENT_VAL_80(sys_state.adc_val[L3_ADC_ID]));
 			break;
 		case '4':
-			printf("%.2f\r\n", get_CURRENT_VAL(sys_state.adc_val[L4_ADC_ID]));
+			printf("%.2f\r\n", get_CURRENT_VAL_80(sys_state.adc_val[L4_ADC_ID]));
 			break;
 		case '5':
-			printf("%.2f\r\n", get_CURRENT_VAL(sys_state.adc_val[L5_ADC_ID]));
+			printf("%.2f\r\n", get_CURRENT_VAL_80(sys_state.adc_val[L5_ADC_ID]));
 			break;
 		default:
 			printf("ERROR\r\n");

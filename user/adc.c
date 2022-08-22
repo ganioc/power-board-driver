@@ -11,6 +11,27 @@
 
 extern struct SYSTEM_STATE sys_state;
 
+
+
+int average_index[ADC_CHANNEL_NUM]={0};
+uint16_t average_val[ADC_CHANNEL_NUM][AVERAGE_TIMES];
+
+static uint16_t calculate_adc_val(int channel, uint16_t new_val){
+
+	average_val[channel][average_index[channel]] = new_val;
+
+	average_index[channel]++;
+	if(average_index[channel]>=AVERAGE_TIMES ){
+		average_index[channel] = 0;
+	}
+
+	uint32_t sum = 0;
+	for(int i=0; i< AVERAGE_TIMES; i++){
+		sum += average_val[channel][i];
+	}
+	return sum/AVERAGE_TIMES;
+}
+
 float get_TEMP_VAL(uint16_t val){
 	return (ADC_TEMP_BASE - (float)val * ADC_VREF / 4096) / ADC_TEMP_SLOPE + 25.0;
 }
@@ -23,9 +44,23 @@ float get_VIN_VAL(uint16_t val){
 float get_VOUT_12V_VAL(uint16_t val){
 	return ((float)val * ADC_VREF / 4096)* 23.0;
 }
+/**
+ * Minus v_in_adc voltage
+ */
 float get_CURRENT_VAL(uint16_t val){
 	float v = (float)val * ADC_VREF / 4096;
-	float i = v* 10.0;
+
+	float v_inadc =  (float) sys_state.adc_val[IN_ADC_ID] * ADC_VREF / 4096;
+
+	float i = (v - v_inadc)* 10.0;
+	return i;
+}
+float get_CURRENT_VAL_80(uint16_t val){
+	float v = (float)val * ADC_VREF / 4096;
+
+	float v_inadc =  (float) sys_state.adc_val[IN_ADC_ID] * ADC_VREF / 4096;
+
+	float i = (v - v_inadc)* 12.5;
 	return i;
 }
 float get_TOTAL_CURRENT_VAL(uint16_t val){
@@ -135,12 +170,14 @@ void check_adc_value(uint16_t nums, volatile uint16_t adc[]){
 
 void handle_adc_value(uint16_t nums, uint16_t times, uint16_t table[ADC_REPEAT_TIMES][ADC_CHANNEL_NUM]) {
 	for (int j = 0; j < nums; j++) {
-		uint16_t temp = 0;
+		uint32_t temp = 0;
 		for (int i = 0; i < times; i++) {
 //			printf("adc1-%d-%d\r\n", i, table[i][j]);
 			temp += table[i][j];
 		}
-		sys_state.adc_val[j] = temp/times;
+
+		// sys_state.adc_val[j] = temp/times;
+		sys_state.adc_val[j] = calculate_adc_val(j, temp/times);
 	}
 	check_adc_value(nums, sys_state.adc_val);
 }
