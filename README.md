@@ -143,6 +143,29 @@ AT+GETCUR=2\r\n
 41 54 2b 47 45 54 43 55 52 3d 32 0d 0a
 ```
 
+10. Get Version
+
+
+```
+AT+VER?\r\n
+41 54 2b 56 45 52 3f 0d 0a
+
+
+```
+
+
+11. Get Chip ID
+
+
+```
+AT+ID?\r\n
+41 54 2b 49 44 3f 0d 0a
+
+
+```
+
+
+
 ### IDE
 使用了AT32 IDE, eclipse 作为集成开发环境。
 
@@ -152,6 +175,14 @@ AT+GETCUR=2\r\n
 1.5 - Power 1 will be ON after power up, no persistent state storage;
 
 2.0 - New version, for D-Flipflop to control IN-power and channe 1 power;
+
+2.1 - Version for formal testing;
+
+2.2 - Parser.c, add 0.5 s AT timeout handling;
+
+2.3 - Add AT+VER?, AT+ID?,
+
+
 
 
 ```

@@ -53,6 +53,8 @@ extern uint16_t adc1_ordinary_valuetab[ADC_REPEAT_TIMES][ADC_CHANNEL_NUM];
 
 uint8_t g_speed = FAST;
 
+uint8_t AT_timeout_flag = 0;  // print out ERROR,
+
 
 //uint16_t buffer_write[TEST_BUFFER_SIZE];
 //uint16_t buffer_read[TEST_BUFFER_SIZE];
@@ -112,6 +114,13 @@ int main(void) {
 		if(dma_flag_get(DMA1_FDT1_FLAG) != RESET){
 			dma_flag_clear(DMA1_FDT1_FLAG);
 			handle_adc_value(ADC_CHANNEL_NUM, ADC_REPEAT_TIMES, adc1_ordinary_valuetab);
+		}
+
+		if(AT_timeout_flag == 1){
+			AT_timeout_flag = 0;
+			AT_reset_state();
+			printf("ERROR\r\n");
+
 		}
 
 	}

@@ -12,7 +12,6 @@
 extern struct SYSTEM_STATE sys_state;
 
 
-
 int average_index[ADC_CHANNEL_NUM]={0};
 uint16_t average_val[ADC_CHANNEL_NUM][AVERAGE_TIMES];
 
@@ -68,6 +67,23 @@ float get_TOTAL_CURRENT_VAL(uint16_t val){
 	float i = v / 0.03;
 	return i;
 }
+/**
+ * 0:16   - 17
+ * 28:31  - 4
+ * 32:33  - 2
+ * 79:87  - 9
+ */
+uint32_t get_UID(){
+	uint32_t m1 = *(uint32_t  *)UID31_BASE;
+	uint32_t m2 = *(uint32_t  *)UID63_BASE;
+	uint32_t m3 = *(uint32_t  *)UID95_BASE;
+
+	uint32_t m = (m1 & 0x1FFFF)|((m1 & 0xF0000000)>>9)|((m2 & 0x3) << 21)| ((m3 & 0xFF8000) << 8);
+
+	return m;
+}
+
+
 void check_RT_ADC(uint16_t val){
 //	printf("RT_ADC: %d\r\n", val);
 }

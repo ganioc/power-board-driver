@@ -26,7 +26,10 @@
 #define AT_TYPE_READ  0
 #define AT_TYPE_WRITE 1
 
+#define AT_IN_HANDLING_COUNTER_MAX  5
+
 void parse(uint8_t ch);
+void AT_reset_state();
 
 
 #endif /* INCLUDE_PARSER_H_ */

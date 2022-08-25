@@ -36,8 +36,13 @@
 #define ADC_TEMP_BASE                    (1.26)
 #define ADC_TEMP_SLOPE                   (-0.00423)
 
-#define AVERAGE_TIMES 100
+#define AVERAGE_TIMES 50
 
+
+#define UIDBASE    0x1FFFF7E0
+#define UID31_BASE 0x1FFFF7E8
+#define UID63_BASE 0x1FFFF7EC
+#define UID95_BASE 0x1FFFF7F0
 
 /* functions */
 void handle_adc_value(uint16_t nums, uint16_t times, uint16_t table[ADC_REPEAT_TIMES][ADC_CHANNEL_NUM]);
@@ -49,5 +54,7 @@ float get_CURRENT_VAL(uint16_t val);
 float get_TOTAL_CURRENT_VAL(uint16_t val);
 /* sensing resistor is 80 mOhm */
 float get_CURRENT_VAL_80(uint16_t val);
+uint32_t get_UID();
+
 
 #endif /* INCLUDE_ADC_H_ */

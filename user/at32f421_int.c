@@ -28,6 +28,7 @@
 #include "at32f421_int.h"
 #include "at32f421_board.h"
 #include "led.h"
+#include "parser.h"
 
 /** @addtogroup AT32F421_periph_template
   * @{
@@ -41,6 +42,9 @@ extern uint8_t usart1_rx_buffer[];
 extern uint16_t usart1_rx_counter;
 //extern uint16_t dma_trans_complete_flag;
 //extern uint16_t dma_in_working;
+extern uint8_t AT_in_handling;
+extern uint8_t AT_in_handling_counter;
+extern uint8_t AT_timeout_flag;
 
 /**
   * @brief  this function handles nmi exception.
@@ -200,6 +204,15 @@ void TMR1_BRK_OVF_TRG_HALL_IRQHandler(void) {
 //		led_green_shine();
 
 		tmr_flag_clear(TMR1, TMR_OVF_FLAG);
+
+		if(AT_in_handling == 1){
+			AT_in_handling_counter++;
+			if(AT_in_handling_counter > AT_IN_HANDLING_COUNTER_MAX){
+				AT_timeout_flag = 1;
+				AT_in_handling = 0;
+				AT_in_handling_counter = 0;
+			}
+		}
 
 	}
 }

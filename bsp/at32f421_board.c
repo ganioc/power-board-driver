@@ -48,7 +48,7 @@ crm_periph_clock_type led_gpio_crm_clk[LED_NUM] = {LED2_GPIO_CRM_CLK, LED3_GPIO_
 uint8_t usart1_rx_buffer[USART1_RX_BUFFER_SIZE];
 uint16_t usart1_rx_counter = 0;
 uint16_t usart1_rx_ptr = 0;
-uint8_t version_buffer[]={'2','.','0', 0};
+uint8_t version_buffer[]={'2','.','3', 0};
 
 /* adc1 buffer */
 __IO uint16_t adc1_ordinary_valuetab[ADC_REPEAT_TIMES][ADC_CHANNEL_NUM] = {0};

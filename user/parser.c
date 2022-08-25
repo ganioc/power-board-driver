@@ -16,6 +16,9 @@ uint8_t tag_buffer[TAG_SIZE];
 uint8_t tag_index;
 uint8_t type;
 
+uint8_t AT_in_handling = 0;
+uint8_t AT_in_handling_counter = 0;
+
 void clear_value_buffer(){
 	for(int i=0; i< VALUE_SIZE; i++){
 		value_buffer[i] = 0;
@@ -28,6 +31,18 @@ void clear_tag_buffer(){
 	}
 	tag_index = 0;
 }
+void enter_handling(){
+	AT_in_handling = 1;
+	AT_in_handling_counter = 0;
+}
+void exit_handling(){
+	AT_in_handling = 0;
+//	AT_reset_state();
+	state = STATE_DUMMY;
+}
+void AT_reset_state(){
+	state = STATE_DUMMY;
+}
 
 void parse(uint8_t ch){
 	switch(state){
@@ -37,13 +52,16 @@ void parse(uint8_t ch){
 			type = AT_TYPE_READ;
 			clear_value_buffer();
 			clear_tag_buffer();
+
+			enter_handling();
 		}
 		break;
 	case STATE_HEAD:
 		if(ch == 'T'){
 			state = STATE_OPERATOR;
 		}else{
-			state = STATE_DUMMY;
+			printf("ERROR\r\n");
+			exit_handling();
 		}
 		break;
 	case STATE_OPERATOR:
@@ -60,10 +78,15 @@ void parse(uint8_t ch){
 		}else if(ch == '='){
 			state = STATE_VALUE;
 			type = AT_TYPE_WRITE;
-		}else{
+		}else if(ch == '\r' || ch == '\n'){
+			printf("ERROR\r\n");
+			exit_handling();
+		}
+		else{
 			tag_buffer[tag_index++] = ch;
 			if(tag_index >= TAG_SIZE){
-				state = STATE_DUMMY;
+				printf("ERROR\r\n");
+				exit_handling();
 			}
 		}
 		break;
@@ -71,7 +94,8 @@ void parse(uint8_t ch){
 		if(ch == '\r'){
 			state = STATE_TAIL;
 		}else{
-			state = STATE_DUMMY;
+			printf("ERROR\r\n");
+			exit_handling();
 		}
 		break;
 	case STATE_VALUE:
@@ -80,15 +104,18 @@ void parse(uint8_t ch){
 		}else{
 			value_buffer[value_index++] = ch;
 			if(value_index >= VALUE_SIZE){
-				state = STATE_DUMMY;
+				printf("ERROR\r\n");
+				exit_handling();
 			}
 		}
 		break;
 	case STATE_TAIL:
 		if(ch == '\n'){
 			handle_command(type, tag_buffer, tag_index, value_buffer, value_index);
+		}else{
+			printf("ERROR\r\n");
 		}
-		state = STATE_DUMMY;
+		exit_handling();
 		break;
 //	case STATE_ERROR:
 //
