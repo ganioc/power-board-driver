@@ -29,9 +29,10 @@ struct SYSTEM_STATE sys_state = {
 };
 void backup_state(){
 	uint16_t temp = 0;
-	if(sys_state.vout_mode == VOUT_MODE_19V){
-		temp += VOUT_POS;
-	}
+	// default mode is 0 - 12V
+//	if(sys_state.vout_mode == VOUT_MODE_19V){
+//		temp += VOUT_POS;
+//	}
 //	if(sys_state.power1_on == 1){
 	temp += POWER1_POS;
 //	}
@@ -53,6 +54,7 @@ void update_state(uint16_t hword){
 	if((hword & VOUT_POS) == 0){
 		sys_state.vout_mode = VOUT_MODE_12V;
 	}else{
+		// sys_state.vout_mode = VOUT_MODE_19V;
 		sys_state.vout_mode = VOUT_MODE_19V;
 	}
 //	if((hword & POWER1_POS) == 0){

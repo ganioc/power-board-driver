@@ -182,6 +182,8 @@ AT+ID?\r\n
 
 2.3 - Add AT+VER?, AT+ID?,
 
+2.3.1 - sys_state.out_mode, 0 - 12V, 1 - 19V, VOUT_POS, 
+
 
 
 
