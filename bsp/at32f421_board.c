@@ -49,6 +49,7 @@ uint8_t usart1_rx_buffer[USART1_RX_BUFFER_SIZE];
 uint16_t usart1_rx_counter = 0;
 uint16_t usart1_rx_ptr = 0;
 uint8_t version_buffer[]={'2','.','3', 0};
+uint8_t model_buffer[]="RMPe5000";
 
 /* adc1 buffer */
 __IO uint16_t adc1_ordinary_valuetab[ADC_REPEAT_TIMES][ADC_CHANNEL_NUM] = {0};

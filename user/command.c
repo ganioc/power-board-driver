@@ -13,7 +13,7 @@
 #include "eeprom.h"
 #include "adc.h"
 
-extern uint8_t version_buffer[];
+extern uint8_t version_buffer[], model_buffer[];
 
 struct SYSTEM_STATE sys_state = {
 		vout:    0,
@@ -104,7 +104,7 @@ void handle_read_command(uint8_t *tag_buffer, uint8_t tag_index) {
 	} else if (strcmp(tag_buffer, "GETVREF") == 0) {
 		printf("%.2f\r\n", get_VREF_VAL(sys_state.adc_val[VREF_ADC_ID]));
 	} else if (strcmp(tag_buffer, "VER") == 0) {
-		printf("%s\r\n", version_buffer);
+		printf("%s:%s\r\n",model_buffer, version_buffer);
 	} else if (strcmp(tag_buffer, "ID") == 0) {
 		printf("%x\r\n", get_UID());
 	}
