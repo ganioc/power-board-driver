@@ -187,6 +187,8 @@ AT+ID?\r\n
 2.3.2 - 19V can not be controlled.
 test: AVERAGE_TIMES, Dont save the state to Flash.
 
+2.3.3 - Update average times to 40
+
 
 ```
 
