@@ -36,7 +36,7 @@
 #define ADC_TEMP_BASE                    (1.26)
 #define ADC_TEMP_SLOPE                   (-0.00423)
 
-#define AVERAGE_TIMES 50
+#define AVERAGE_TIMES 40
 
 
 #define UIDBASE    0x1FFFF7E0

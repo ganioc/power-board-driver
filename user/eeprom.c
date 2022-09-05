@@ -120,7 +120,7 @@ int write_to_EEPROM(uint16_t info_hword){
 
 	flash_write(EEPROM_FLASH_ADDRESS_START, data_buf, 3);
 
-	update_state(info_hword);
+	//update_state_after_write_EEPROM(info_hword);
 
 	return 0;
 }
@@ -145,6 +145,7 @@ void check_EEPROM() {
 		write_to_EEPROM(INFO_DEFAULT);
 		printf("info half word: %x\r\n", INFO_DEFAULT);
 	}else{
+		// update sys_state based on flash info_word,
 		update_state(temp);
 		printf("info half word: %x\r\n", temp);
 	}

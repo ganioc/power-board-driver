@@ -33,9 +33,9 @@ void backup_state(){
 //	if(sys_state.vout_mode == VOUT_MODE_19V){
 //		temp += VOUT_POS;
 //	}
-//	if(sys_state.power1_on == 1){
-	temp += POWER1_POS;
-//	}
+	if(sys_state.power1_on == 1){
+		temp += POWER1_POS;
+	}
 	if(sys_state.power2_on == 1){
 		temp += POWER2_POS;
 	}
@@ -50,6 +50,10 @@ void backup_state(){
 	}
 	write_to_EEPROM(temp);
 }
+/**
+ * Always enable Power1 On,
+ *
+ */
 void update_state(uint16_t hword){
 	if((hword & VOUT_POS) == 0){
 		sys_state.vout_mode = VOUT_MODE_12V;
@@ -57,11 +61,11 @@ void update_state(uint16_t hword){
 		// sys_state.vout_mode = VOUT_MODE_19V;
 		sys_state.vout_mode = VOUT_MODE_19V;
 	}
-//	if((hword & POWER1_POS) == 0){
-//		sys_state.power1_on = POWER_ON;
-//	}else{
-//		sys_state.power1_on = POWER_ON;
-//	}
+	if((hword & POWER1_POS) == 0){
+		sys_state.power1_on = POWER_ON;
+	}else{
+		sys_state.power1_on = POWER_ON;
+	}
 	if((hword & POWER2_POS) == 0){
 		sys_state.power2_on = POWER_OFF;
 	}else{
@@ -106,7 +110,8 @@ void handle_read_command(uint8_t *tag_buffer, uint8_t tag_index) {
 	} else if (strcmp(tag_buffer, "VER") == 0) {
 		printf("%s:%s\r\n",model_buffer, version_buffer);
 	} else if (strcmp(tag_buffer, "ID") == 0) {
-		printf("%x\r\n", get_UID());
+		uint32_t tmp = get_UID();
+		printf("%02x%02x%02x%02x\r\n",(tmp & 0xFF000000)>>24,(tmp & 0xFF0000)>>16,(tmp & 0xFF00)>>8,(tmp&0xFF));
 	}
 	else {
 		printf("ERROR\r\n");

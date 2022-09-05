@@ -184,7 +184,8 @@ AT+ID?\r\n
 
 2.3.1 - sys_state.out_mode, 0 - 12V, 1 - 19V, VOUT_POS, 
 
-
+2.3.2 - 19V can not be controlled.
+test: AVERAGE_TIMES, Dont save the state to Flash.
 
 
 ```
