@@ -18,6 +18,7 @@ extern uint8_t version_buffer[], model_buffer[];
 struct SYSTEM_STATE sys_state = {
 		vout:    0,
 		echo_en: 0,
+		enable_vout1_19v : 0,
 		vout_mode: VOUT_MODE_12V,
 		power1_on: POWER_ON,
 		power2_on: POWER_ON,
@@ -162,6 +163,7 @@ void handle_write_command(uint8_t *tag_buffer, uint8_t tag_index,
 	} else if(strcmp(tag_buffer, "ONPOWER") == 0){
 		switch(value_buffer[0]){
 		case '1':
+
 			check_state_by_command(&(sys_state.power1_on), POWER_ON);
 			break;
 		case '2':
@@ -208,6 +210,10 @@ void handle_write_command(uint8_t *tag_buffer, uint8_t tag_index,
 			check_state_by_command(&(sys_state.vout_mode),0);
 			break;
 		case '1':
+			if(sys_state.enable_vout1_19v == 0){
+				printf("ERROR\r\n");
+				return;
+			}
 			check_state_by_command(&(sys_state.vout_mode),1);
 			break;
 		default:

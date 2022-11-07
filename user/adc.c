@@ -137,6 +137,14 @@ void check_VIN_ADC(uint16_t val){
 //	printf("VIN_ADC: %d %.2f\r\n", val, v);
 
 	if( v <= DC_MAX && v >= DC_MIN){
+
+		if( v < DC_OUT1_THRESHOLD){
+			// voltage is not high enough to output Vout1, 19V
+			sys_state.enable_vout1_19v = 0;
+		}else{
+			sys_state.enable_vout1_19v = 1;
+		}
+
 		en_POWER_ON();
 		en_POWER1_ON();
 		en_POWER2_ON();

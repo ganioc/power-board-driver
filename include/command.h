@@ -20,6 +20,7 @@
 struct SYSTEM_STATE{
 	__IO  uint8_t vout;
 	__IO  uint8_t echo_en;
+	__IO  uint8_t enable_vout1_19v;
 	__IO  uint8_t vout_mode;
 	__IO  uint8_t power1_on;
 	__IO  uint8_t power2_on;

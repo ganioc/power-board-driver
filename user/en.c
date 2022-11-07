@@ -39,8 +39,10 @@ void en_POWER1_ON(){
 
 	if( sys_state.vout_mode == VOUT_MODE_12V){
 		en_gpio_off(VOUT_IO_GPIO, VOUT_IO_PIN);
-	}else{
+	}else if(sys_state.enable_vout1_19v == 1){
 		en_gpio_on(VOUT_IO_GPIO, VOUT_IO_PIN);
+	}else{
+		en_gpio_off(VOUT_IO_GPIO, VOUT_IO_PIN);
 	}
 }
 void en_POWER1_OFF(){
