@@ -189,6 +189,9 @@ test: AVERAGE_TIMES, Dont save the state to Flash.
 
 2.3.3 - Update average times to 40
 
+2.3.4 - Bug Fixing,
+	* Change valid input voltage led shining pattern,
+	
 
 ```
 

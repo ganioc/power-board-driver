@@ -13,6 +13,7 @@ uint16_t led_green_counter=0;
 
 uint16_t led_red_timer=0;
 uint16_t led_red_timer_en = 0;
+uint16_t led_red_type = 0;
 
 uint16_t led_blue_timer=0;
 uint16_t led_blue_timer_en = 0;
@@ -51,16 +52,22 @@ void led_red_toggle(void){
 void led_red_shine_slow(){
 	led_red_timer_en = 1;
 	led_red_timer = LED_SHINE_SLOW;
+	led_red_type = LED_RED_OK;
+	led_red_on();
 }
 
 void led_red_shine_fast(){
 	led_red_timer_en = 1;
 	led_red_timer = LED_SHINE_FAST;
+	led_red_type = LED_RED_NOK;
 }
 void led_red_shine_off(){
 	led_red_timer_en = 0;
 }
 void led_red_shine(){
+	if(led_red_type == LED_RED_OK){
+		return;
+	}
 	if(led_red_timer_en){
 		led_red_counter++;
 		if(led_red_counter >= led_red_timer){

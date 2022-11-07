@@ -11,6 +11,11 @@
 #define LED_SHINE_SLOW  10
 #define LED_SHINE_FAST  1
 
+enum LED_RED_TYPE{
+	LED_RED_OK,
+	LED_RED_NOK
+};
+
 
 void led_blue_on(void);
 void led_blue_off(void);
