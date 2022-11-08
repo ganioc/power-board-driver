@@ -191,7 +191,9 @@ test: AVERAGE_TIMES, Dont save the state to Flash.
 
 2.3.4 - Bug Fixing,
 	* Change valid input voltage led shining pattern,
-	
+	* change Vout power1 working condition, 19V~60V
+	* correct voltage reading methods
+2.4 - New Version
 
 ```
 
