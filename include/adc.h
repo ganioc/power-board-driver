@@ -14,6 +14,8 @@
 #define DC_MAX              60.0
 #define DC_MIN              9.0
 #define DC_OUT1_THRESHOLD   16.0
+#define DC_COEF             22.89
+#define DC_OFFSET_COEF      1.5
 #define DEC_MAX             4096
 #define VIN_ADC_DIVISION    0.04
 #define MAX_CURRENT         3.0

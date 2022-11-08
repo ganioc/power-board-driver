@@ -99,11 +99,11 @@ void handle_read_command(uint8_t *tag_buffer, uint8_t tag_index) {
 	} else if (strcmp(tag_buffer, "POWER1") == 0) {
 		printf("%d\r\n", sys_state.vout_mode);
 	} else if (strcmp(tag_buffer, "GETVIN") == 0) {
-		printf("%.2f\r\n", get_VIN_VAL(sys_state.adc_val[VIN_ADC_ID]));
+		printf("%.2f\r\n", get_VIN_VAL(sys_state.adc_val[VIN_ADC_ID] - sys_state.adc_val[IN_ADC_ID] * DC_OFFSET_COEF));
 	}else if (strcmp(tag_buffer, "GETV12") == 0) {
-		printf("%.2f\r\n", get_VOUT_12V_VAL(sys_state.adc_val[VOUT_12V_ADC_ID]));
+		printf("%.2f\r\n", get_VOUT_12V_VAL(sys_state.adc_val[VOUT_12V_ADC_ID] - sys_state.adc_val[IN_ADC_ID] * DC_OFFSET_COEF));
 	} else if (strcmp(tag_buffer, "GETVOUT") == 0) {
-		printf("%.2f\r\n", get_VOUT_12V_VAL(sys_state.adc_val[VOUT_ADC_ID]));
+		printf("%.2f\r\n", get_VOUT_12V_VAL(sys_state.adc_val[VOUT_ADC_ID] - sys_state.adc_val[IN_ADC_ID] * DC_OFFSET_COEF));
 	} else if (strcmp(tag_buffer, "GETTEMP") == 0) {
 		printf("%.2f\r\n", get_TEMP_VAL(sys_state.adc_val[TEMP_ADC_ID]));
 	} else if (strcmp(tag_buffer, "GETVREF") == 0) {

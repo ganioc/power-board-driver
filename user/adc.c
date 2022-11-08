@@ -38,10 +38,10 @@ float get_VREF_VAL(uint16_t val){
 	return (float)(1.2 * 4095) / val;
 }
 float get_VIN_VAL(uint16_t val){
-	return ((float)val * ADC_VREF / 4096)* 23.0;
+	return ((float)val * ADC_VREF / 4096)* DC_COEF;
 }
 float get_VOUT_12V_VAL(uint16_t val){
-	return ((float)val * ADC_VREF / 4096)* 23.0;
+	return ((float)val * ADC_VREF / 4096)* DC_COEF;
 }
 /**
  * Minus v_in_adc voltage
@@ -111,9 +111,13 @@ void check_L1_ADC(uint16_t val){
 //	printf("L1_ADC: %d %.2f\r\n", val,v);
 
 }
-void check_VOUT_ADC(uint16_t val){
-	float v = get_VOUT_12V_VAL(val);
-//	printf("VOUT_ADC: %d %.2f\r\n", val, v);
+void check_VOUT_ADC(uint16_t val,uint16_t offset){
+//	printf("orig: %d offset: %d\r\n", val, offset);
+	float v = get_VOUT_12V_VAL(val - offset);
+//	printf("VOUT_ADC: %d %.2f\r\n", val-offset, v);
+
+//	sys_state.adc_val[VOUT_ADC_ID] = val - offset;
+
 	if( v >= 10.0){
 		if(sys_state.vout_mode == VOUT_MODE_12V){
 			led_green_on();
@@ -127,13 +131,19 @@ void check_VOUT_ADC(uint16_t val){
 		led_blue_off();
 	}
 }
-void check_VOUT_12V_ADC(uint16_t val){
-	float v = get_VOUT_12V_VAL(val);
+void check_VOUT_12V_ADC(uint16_t val,uint16_t offset){
+	float v = get_VOUT_12V_VAL(val - offset);
+
+//	sys_state.adc_val[VOUT_12V_ADC_ID] = val - offset;
+
 //	printf("VOUT_12V_ADC: %d %.2f\r\n", val, v);
 
 }
-void check_VIN_ADC(uint16_t val){
-	float v = get_VIN_VAL(val);
+void check_VIN_ADC(uint16_t val,uint16_t offset){
+	float v = get_VIN_VAL(val - offset);
+
+//	sys_state.adc_val[VIN_ADC_ID] = val - offset;
+
 //	printf("VIN_ADC: %d %.2f\r\n", val, v);
 
 	if( v <= DC_MAX && v >= DC_MIN){
@@ -167,7 +177,7 @@ void check_VIN_ADC(uint16_t val){
 }
 /* Not used */
 void check_IN_ADC(uint16_t val){
-//	printf("IN_ADC: %d\r\n", val);
+	// printf("IN_ADC: %02x\r\n", val);
 }
 void check_TEMP_ADC(uint16_t val){
 //	printf("TEMP_ADC: %d %.2f\r\n", val, get_TEMP_VAL(val));
@@ -184,9 +194,9 @@ void check_adc_value(uint16_t nums, volatile uint16_t adc[]){
 	check_L3_ADC(adc[L3_ADC_ID]);
 	check_L2_ADC(adc[L2_ADC_ID]);
 	check_L1_ADC(adc[L1_ADC_ID]);
-	check_VOUT_ADC(adc[VOUT_ADC_ID]);
-	check_VOUT_12V_ADC(adc[VOUT_12V_ADC_ID]);
-	check_VIN_ADC(adc[VIN_ADC_ID]);
+	check_VOUT_ADC(adc[VOUT_ADC_ID], adc[IN_ADC_ID] * DC_OFFSET_COEF);
+	check_VOUT_12V_ADC(adc[VOUT_12V_ADC_ID], adc[IN_ADC_ID] * DC_OFFSET_COEF);
+	check_VIN_ADC(adc[VIN_ADC_ID], adc[IN_ADC_ID] * DC_OFFSET_COEF);
 	check_IN_ADC(adc[IN_ADC_ID]);
 	check_TEMP_ADC(adc[TEMP_ADC_ID]);
 	check_VREF_ADC(adc[VREF_ADC_ID]);
